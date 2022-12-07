@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
-@Entity
 @Data
+@Entity
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,7 @@ public class User {
     private long phonNum;
     private String email;
     private String gender;
+    
     
     @OneToMany
     private List<Book> books;   
