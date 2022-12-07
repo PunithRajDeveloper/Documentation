@@ -20,7 +20,7 @@ public class BookDao {
 
 	public Book getBookbyId(int id) {
 		Optional<Book> optional = repositery.findById(id);
-		if (optional != null) {
+		if (optional.isPresent()) {
 			return optional.get();
 		} else {
 			return null;
