@@ -10,14 +10,13 @@ import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
-@Entity
 @Getter
 @Setter
+@Entity
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
-	private double price;
 	private int quantity;
 	@OneToMany
 	private List<Book> books;
