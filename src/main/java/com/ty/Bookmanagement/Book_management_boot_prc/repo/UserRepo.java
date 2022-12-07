@@ -1,5 +1,9 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.repo;
 
-public interface UserRepo {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
+
+public interface UserRepo extends JpaRepository<User, Integer>{
 
 }
