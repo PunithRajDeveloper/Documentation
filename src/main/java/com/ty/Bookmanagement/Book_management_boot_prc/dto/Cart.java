@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +18,17 @@ import lombok.Setter;
 public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id ;
-	private double price;
-	private int quantity;
+	private int id;
+	@NotNull(message = "enter name of the Orderer")
+	private String name;
+	@NotNull(message = "provide Address to send the ordered Books")
+	private String address;
+	@NotNull(message = "Provide active Phone number to contact")
+	private long phone;
+	private String email;
+	private double totalcost;
+	
 	@OneToMany
-	private List<Book> books;
+	private List<Product> products;
 	
 }
