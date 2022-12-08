@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.ProductDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Product;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 @Service
 public class ProductService {
@@ -32,34 +35,39 @@ public class ProductService {
 		ResponseStructure<Product> responseStructure = new ResponseStructure<>();
 		
 
-		if (product != null) {
+		if (product.isPresent()) {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail received");
 			responseStructure.setData(dao.findProductById(id).get());
-		} 
+		
 		return new ResponseEntity<ResponseStructure<Product>>(
 				responseStructure, HttpStatus.OK);
 	}
+	  throw new NoSuchIdFoundException();
+	}
+	
 
 	public ResponseEntity<ResponseStructure<Product>> UpdateProduct(Product product, int id) {
 		Optional<Product> product2 = dao.findProductById(id);
 		ResponseStructure<Product> responseStructure = new ResponseStructure<>();
 	
-		if (product2 != null) {
+		if (product2.isPresent()) {
 			product.setId(id);
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail update Sucessfully");
 			responseStructure.setData(dao.updateProduct(product));
-		}
+		
 		return new ResponseEntity<ResponseStructure<Product>>(
 				responseStructure, HttpStatus.OK);
+	}
+	  throw new UnableToUpdateException()	;
 	}
 	
 	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
 		ResponseStructure<String> responseStructure=new ResponseStructure<String>();
 		Optional<Product> product3=dao.findProductById(id);
 		
-		if(product3!=null) {
+		if(product3.isPresent()) {
 			dao.deleteProduct(product3.get());
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
@@ -68,6 +76,6 @@ public class ProductService {
 				responseStructure, HttpStatus.OK);
 		}
 		
-		throw null;
+		throw new UnableToDeleteException();
 	}
 }

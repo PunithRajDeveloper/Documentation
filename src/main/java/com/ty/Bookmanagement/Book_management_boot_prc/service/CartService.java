@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.CartDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
@@ -36,14 +39,14 @@ public class CartService {
 			return new ResponseEntity<ResponseStructure<Cart>>(responseStructure,
 					HttpStatus.OK);
 		} 
-		throw null;
+		throw new NoSuchIdFoundException();
 	}
 
 	public ResponseEntity<ResponseStructure<Cart>> UpdateCart(Cart cart, int id) {
        Optional<Cart> cart2=dao.findCartById(id);
 		ResponseStructure<Cart> responseStructure = new ResponseStructure<>();
 		
-		if (cart2 != null) {
+		if (cart2.isPresent()) {
 			cart.setId(id);
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail update Sucessfully");
@@ -51,14 +54,14 @@ public class CartService {
 			return new ResponseEntity<ResponseStructure<Cart>>(
 					responseStructure, HttpStatus.OK);
 		} 
-		throw null;
+		throw new UnableToUpdateException();
 	}
 
 	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 		Optional<Cart> cart3 = dao.findCartById(id);
 
-		if (cart3 != null) {
+		if (cart3.isPresent()) {
 			dao.deleteCart(cart3.get());
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
@@ -66,7 +69,7 @@ public class CartService {
 			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		}
 
-		throw null;
+		throw new UnableToDeleteException();
 
 	}
 }
