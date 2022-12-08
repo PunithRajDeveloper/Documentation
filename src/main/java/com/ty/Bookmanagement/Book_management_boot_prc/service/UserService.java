@@ -1,5 +1,7 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,63 +22,48 @@ public class UserService {
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("SAVED");
 		responseStructure.setData(userDao.saveUser(user));
-		ResponseEntity<ResponseStructure<User>> responseEntity = new ResponseEntity<ResponseStructure<User>>(
-				responseStructure, HttpStatus.CREATED);
-		return responseEntity;
+		return new ResponseEntity<ResponseStructure<User>>(responseStructure, HttpStatus.CREATED);
 	}
 
 	public ResponseEntity<ResponseStructure<User>> updateUsetById(User user, int id) {
-		User user2 = userDao.getUsreById(id);
+		Optional<User> user2 = userDao.getUsreById(id);
 		ResponseStructure<User> responseStructure = new ResponseStructure<User>();
 
-		if (user2 != null) {
+		if (user2.isPresent()) {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("updated");
 			responseStructure.setData(userDao.updateUser(user));
-		} else {
-			return null;
+			return new ResponseEntity<ResponseStructure<User>>(responseStructure, HttpStatus.OK);
 		}
-
-		ResponseEntity<ResponseStructure<User>> responseEntity = new ResponseEntity<ResponseStructure<User>>(
-				responseStructure, HttpStatus.OK);
-		return responseEntity;
-
+		throw null;
 	}
-	
-	public ResponseEntity<ResponseStructure<User>> getUsetById(int id) {
-		
-		User user=userDao.getUsreById(id);
-		ResponseStructure<User>  responseStructure=new  ResponseStructure<User>();
-		if(user!=null) {
-		responseStructure.setStatus(HttpStatus.FOUND.value());
-		responseStructure.setMessage("FOUND");
-		responseStructure.setData(userDao.getUsreById(id));
+
+	public ResponseEntity<ResponseStructure<User>> getUserById(int id) {
+
+		Optional<User> user = userDao.getUsreById(id);
+		ResponseStructure<User> responseStructure = new ResponseStructure<User>();
+		if (user.isPresent()) {
+			responseStructure.setStatus(HttpStatus.FOUND.value());
+			responseStructure.setMessage("FOUND");
+			responseStructure.setData(user.get());
+
+			return new ResponseEntity<ResponseStructure<User>>(responseStructure, HttpStatus.FOUND);
 		}
-		else {
-			return null;
-		}
-		ResponseEntity<ResponseStructure<User>> responseEntity = new ResponseEntity<ResponseStructure<User>>(
-				responseStructure, HttpStatus.FOUND);
-		return responseEntity;
+		throw null;
 	}
-	
-	public ResponseEntity<ResponseStructure<String>> deleteById(User user ,int id) {
-		ResponseStructure<String> responseStructure=new ResponseStructure<String>();
-		User  user2=userDao.getUsreById(id);
-		
-		if(user2!=null) {
+
+	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		Optional<User> user2 = userDao.getUsreById(id);
+
+		if (user2.isPresent()) {
+			userDao.deleteUser(user2.get());
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
-			responseStructure.setData(userDao.deleteUser(user));
+			responseStructure.setData("Deleted");
+			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		}
-		
-		else {
-			return null;
-		}
-		
-		ResponseEntity<ResponseStructure<String>> responseEntity = new ResponseEntity<ResponseStructure<String>>(
-				responseStructure, HttpStatus.OK);
-		return responseEntity;
+		throw null;
 	}
 
 }
