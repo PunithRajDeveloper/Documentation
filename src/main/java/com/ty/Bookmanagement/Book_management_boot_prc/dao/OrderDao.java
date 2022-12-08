@@ -22,9 +22,9 @@ public abstract class OrderDao {
 		return repo.save(order);
 	}
 	
-	public Orders findOrdersById(int id)
+	public Optional<Orders> findOrdersById(int id)
 	{
-		return repo.findById(id).get();
+		return repo.findById(id);
 	}
 	public String deleteOrders(Orders orders)
 	{
