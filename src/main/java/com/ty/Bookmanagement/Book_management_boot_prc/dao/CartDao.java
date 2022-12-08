@@ -27,10 +27,10 @@ public Optional<Cart> findCartById(int id)
 	return cartrepo.findById(id);
 	
 }
-public String deleteCart(Cart cart)
+public void deleteCart(Cart cart)
 {
 	cartrepo.delete(cart);
-	return "deleted";
+	
 }
 
 

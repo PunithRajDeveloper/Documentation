@@ -27,9 +27,9 @@ public class ProductDao {
 		return productrepo.findById(id);
 		
 	}
-	public String deleteProduct(Product product)
+	public void deleteProduct(Product product)
 	{
 		productrepo.delete(product);
-		return "deleted";
+		
 	}
 }

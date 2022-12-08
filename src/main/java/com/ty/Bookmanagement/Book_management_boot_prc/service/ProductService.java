@@ -19,64 +19,55 @@ public class ProductService {
 	public ResponseEntity<ResponseStructure<Product>> saveProduct(Product product) {
 		ResponseStructure<Product> responseStructure = new ResponseStructure<>();
 		
-		ResponseEntity<ResponseStructure<Product>> entity = new ResponseEntity<ResponseStructure<Product>>(
-				responseStructure, HttpStatus.CREATED);
+	
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Product detail saved sucessfully");
 		responseStructure.setData(dao.saveProduct(product));
-		return entity;
+		return new ResponseEntity<ResponseStructure<Product>>(
+				responseStructure, HttpStatus.CREATED);
 	}
 	
 	public ResponseEntity<ResponseStructure<Product>> getProductById(int id) {
 		Optional<Product> product = dao.findProductById(id);
 		ResponseStructure<Product> responseStructure = new ResponseStructure<>();
-		ResponseEntity<ResponseStructure<Product>> entity = new ResponseEntity<ResponseStructure<Product>>(
-				responseStructure, HttpStatus.OK);
+		
 
 		if (product != null) {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail received");
 			responseStructure.setData(dao.findProductById(id).get());
-		} else {
-			return null;
-		}
-
-		return entity;
+		} 
+		return new ResponseEntity<ResponseStructure<Product>>(
+				responseStructure, HttpStatus.OK);
 	}
 
 	public ResponseEntity<ResponseStructure<Product>> UpdateProduct(Product product, int id) {
 		Optional<Product> product2 = dao.findProductById(id);
 		ResponseStructure<Product> responseStructure = new ResponseStructure<>();
-		ResponseEntity<ResponseStructure<Product>> entity = new ResponseEntity<ResponseStructure<Product>>(
-				responseStructure, HttpStatus.OK);
+	
 		if (product2 != null) {
 			product.setId(id);
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail update Sucessfully");
 			responseStructure.setData(dao.updateProduct(product));
-		} else {
-			return null;
 		}
-
-		return entity;
+		return new ResponseEntity<ResponseStructure<Product>>(
+				responseStructure, HttpStatus.OK);
 	}
 	
-	public ResponseEntity<ResponseStructure<String>> deleteById(Product product ,int id) {
+	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
 		ResponseStructure<String> responseStructure=new ResponseStructure<String>();
 		Optional<Product> product3=dao.findProductById(id);
 		
 		if(product3!=null) {
+			dao.deleteProduct(product3.get());
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
-			responseStructure.setData(dao.deleteProduct(product));
-		}
-		
-		else {
-			return null;
-		}
-		
-		ResponseEntity<ResponseStructure<String>> responseEntity = new ResponseEntity<ResponseStructure<String>>(
+			responseStructure.setData("Deleted");
+		return new ResponseEntity<ResponseStructure<String>>(
 				responseStructure, HttpStatus.OK);
-		return responseEntity;
+		}
+		
+		throw null;
 	}
 }
