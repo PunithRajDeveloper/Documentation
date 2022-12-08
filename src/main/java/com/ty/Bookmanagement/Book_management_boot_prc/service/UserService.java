@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.UserDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
@@ -30,12 +33,13 @@ public class UserService {
 		ResponseStructure<User> responseStructure = new ResponseStructure<User>();
 
 		if (user2.isPresent()) {
+			user.setId(id);
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("updated");
 			responseStructure.setData(userDao.updateUser(user));
 			return new ResponseEntity<ResponseStructure<User>>(responseStructure, HttpStatus.OK);
 		}
-		throw null;
+		throw new UnableToUpdateException();
 	}
 
 	public ResponseEntity<ResponseStructure<User>> getUserById(int id) {
@@ -49,7 +53,7 @@ public class UserService {
 
 			return new ResponseEntity<ResponseStructure<User>>(responseStructure, HttpStatus.FOUND);
 		}
-		throw null;
+		throw new NoSuchIdFoundException();
 	}
 
 	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
@@ -63,7 +67,7 @@ public class UserService {
 			responseStructure.setData("Deleted");
 			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		}
-		throw null;
+		throw new UnableToDeleteException();
 	}
 
 }
