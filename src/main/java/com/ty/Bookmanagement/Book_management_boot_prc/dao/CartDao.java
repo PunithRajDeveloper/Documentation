@@ -1,5 +1,7 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.dao;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,9 +22,9 @@ public Cart updateCart(Cart cart)
 	return cartrepo.save(cart);
 }
 
-public Cart findCartById(int id)
+public Optional<Cart> findCartById(int id)
 {
-	return cartrepo.findById(id).get();
+	return cartrepo.findById(id);
 	
 }
 public String deleteCart(Cart cart)
