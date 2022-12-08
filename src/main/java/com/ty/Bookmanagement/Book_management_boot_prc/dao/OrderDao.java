@@ -24,19 +24,11 @@ public abstract class OrderDao {
 	
 	public Orders findOrdersById(int id)
 	{
-		Optional<Orders>optional=repo.findById(id);
-		if(optional.isEmpty())
-		{
-			return null;
-		}
-		else
-		{
-			return optional.get();
-		}
+		return repo.findById(id).get();
 	}
-	public String deleteOrders(int id)
+	public String deleteOrders(Orders orders)
 	{
-		repo.deleteById(id);
+		repo.delete(orders);
 		return "deleted";
 	}
 
