@@ -9,7 +9,7 @@ import com.ty.Bookmanagement.Book_management_boot_prc.dto.Orders;
 import com.ty.Bookmanagement.Book_management_boot_prc.repo.OrderRepo;
 
 @Repository
-public abstract class OrderDao {
+public  class OrderDao {
 	@Autowired
 	private OrderRepo repo;
 	
