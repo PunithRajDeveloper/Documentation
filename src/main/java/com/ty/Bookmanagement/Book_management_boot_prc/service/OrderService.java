@@ -24,63 +24,56 @@ public class OrderService {
 	public ResponseEntity<ResponseStructure<Orders>> saveOrder(Orders orders) {
 
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
-		ResponseEntity<ResponseStructure<Orders>> responseEntity = new ResponseEntity<ResponseStructure<Orders>>(
-				responseStructure, HttpStatus.CREATED);
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Data Saved");
 		responseStructure.setData(dao.saveOrder(orders));
-		return responseEntity;
+		return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.CREATED);
 	}
 
 	public ResponseEntity<ResponseStructure<Orders>> updateOrder(Orders orders, int id) {
 
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
-		ResponseEntity<ResponseStructure<Orders>> responseEntity = new ResponseEntity<ResponseStructure<Orders>>(
-				responseStructure, HttpStatus.OK);
-		if (orders1 != null) {
+		if (orders1.isPresent()) {
 			orders.setId(id);
 
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Updated");
 			responseStructure.setData(dao.saveOrder(orders));
-
-		} else {
-			throw new UnableToUpdateException("UnableToUpdate");
+			return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.OK);
 		}
-		return responseEntity;
+		throw new UnableToUpdateException("UnableToUpdate");
+
 	}
 
 	public ResponseEntity<ResponseStructure<Orders>> getOrderById(int id) {
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
-		ResponseEntity<ResponseStructure<Orders>> responseEntity = new ResponseEntity<ResponseStructure<Orders>>(
-				responseStructure, HttpStatus.OK);
-		if (orders1 != null) {
+		if (orders1.isPresent()) {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Received");
 			responseStructure.setData(dao.findOrdersById(id).get());
+			return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.OK);
 
-		} else {
-			throw new NoSuchIdFoundException();
 		}
-		return responseEntity;
+		throw new NoSuchIdFoundException();
+
 	}
 
 	public ResponseEntity<ResponseStructure<String>> deleteOrderById(Orders orders, int id) {
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
-		ResponseEntity<ResponseStructure<String>> responseEntity = new ResponseEntity<ResponseStructure<String>>(
-				responseStructure, HttpStatus.OK);
-		if (orders1 != null) {
-			responseStructure.setStatus(HttpStatus.OK.value());
-			responseStructure.setMessage("Received");
-			responseStructure.setData(dao.deleteOrders(orders));
 
-		} else {
-			throw new UnableToDeleteException("UnableToDelete");
+		if (orders1.isPresent()) {
+			dao.deleteOrders(orders);
+			responseStructure.setStatus(HttpStatus.OK.value());
+			responseStructure.setMessage("Deleted");
+			responseStructure.setData("Deleted");
+			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
+
 		}
-		return responseEntity;
+		throw new UnableToDeleteException("UnableToDelete");
+
 	}
 
 }
