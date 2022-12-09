@@ -22,12 +22,12 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 	@ExceptionHandler(NoSuchIdFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> noSuchIdFoundHandler(NoSuchIdFoundException exception) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
-		ResponseEntity<ResponseStructure<String>> responseEntity = new ResponseEntity<ResponseStructure<String>>(
+		ResponseEntity<ResponseStructure<String>> entity = new ResponseEntity<ResponseStructure<String>>(
 				responseStructure, HttpStatus.NOT_FOUND);
 		responseStructure.setStatus(HttpStatus.NOT_FOUND.value());
 		responseStructure.setMessage("IdNotFoundException");
 		responseStructure.setData(exception.getMessage());
-		return responseEntity;
+		return entity;
 	}
 
 	@ExceptionHandler(UnableToUpdateException.class)
@@ -49,6 +49,19 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 				responseStructure, HttpStatus.NOT_FOUND);
 		responseStructure.setStatus(HttpStatus.NOT_FOUND.value());
 		responseStructure.setMessage("UnableToDeleteException");
+		responseStructure.setData(exception.getMessage());
+		return responseEntity;
+
+	}
+	
+	@ExceptionHandler(NoSuchCatagoryFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> noSuchCatagoryFound(NoSuchCatagoryFoundException exception)
+	{
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		ResponseEntity<ResponseStructure<String>> responseEntity = new ResponseEntity<ResponseStructure<String>>(
+				responseStructure, HttpStatus.NOT_FOUND);
+		responseStructure.setStatus(HttpStatus.NOT_FOUND.value());
+		responseStructure.setMessage("NoSuch CatagoryFoundException");
 		responseStructure.setData(exception.getMessage());
 		return responseEntity;
 
