@@ -16,11 +16,11 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 @Service
 public class ProductService {
 	@Autowired
-	private ProductDao dao;
+	ProductDao dao;
 	
 
 	public ResponseEntity<ResponseStructure<Product>> saveProduct(Product product) {
-		ResponseStructure<Product> responseStructure = new ResponseStructure<>();
+		ResponseStructure<Product> responseStructure = new ResponseStructure<Product>();
 		
 	
 		responseStructure.setStatus(HttpStatus.CREATED.value());
@@ -31,25 +31,25 @@ public class ProductService {
 	}
 	
 	public ResponseEntity<ResponseStructure<Product>> getProductById(int id) {
-		Optional<Product> product = dao.findProductById(id);
-		ResponseStructure<Product> responseStructure = new ResponseStructure<>();
+		Optional<Product> product = dao.getProductById(id);
+		ResponseStructure<Product> responseStructure = new ResponseStructure<Product>();
 		
 
 		if (product.isPresent()) {
-			responseStructure.setStatus(HttpStatus.OK.value());
+			responseStructure.setStatus(HttpStatus.FOUND.value());
 			responseStructure.setMessage("Cart detail received");
-			responseStructure.setData(dao.findProductById(id).get());
+			responseStructure.setData(product.get());
 		
 		return new ResponseEntity<ResponseStructure<Product>>(
-				responseStructure, HttpStatus.OK);
+				responseStructure, HttpStatus.FOUND);
 	}
 	  throw new NoSuchIdFoundException();
 	}
 	
 
-	public ResponseEntity<ResponseStructure<Product>> UpdateProduct(Product product, int id) {
-		Optional<Product> product2 = dao.findProductById(id);
-		ResponseStructure<Product> responseStructure = new ResponseStructure<>();
+	public ResponseEntity<ResponseStructure<Product>> UpdateProductById(Product product, int id) {
+		Optional<Product> product2 = dao.getProductById(id);
+		ResponseStructure<Product> responseStructure = new ResponseStructure<Product>();
 	
 		if (product2.isPresent()) {
 			product.setId(id);
@@ -63,9 +63,10 @@ public class ProductService {
 	  throw new UnableToUpdateException()	;
 	}
 	
+	
 	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
 		ResponseStructure<String> responseStructure=new ResponseStructure<String>();
-		Optional<Product> product3=dao.findProductById(id);
+		Optional<Product> product3=dao.getProductById(id);
 		
 		if(product3.isPresent()) {
 			dao.deleteProduct(product3.get());
