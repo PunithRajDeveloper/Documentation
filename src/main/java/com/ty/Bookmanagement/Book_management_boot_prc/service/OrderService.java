@@ -1,6 +1,5 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ty.Bookmanagement.Book_management_boot_prc.dao.CartDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.OrderDao;
-import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Orders;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
@@ -20,12 +19,15 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 public class OrderService {
 	@Autowired
 	private OrderDao dao;
+	@Autowired
+	private CartDao cartDao;
 
 	public ResponseEntity<ResponseStructure<Orders>> saveOrder(Orders orders) {
 
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Data Saved");
+		cartDao.saveCart(orders.getCart());
 		responseStructure.setData(dao.saveOrder(orders));
 		return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.CREATED);
 	}
