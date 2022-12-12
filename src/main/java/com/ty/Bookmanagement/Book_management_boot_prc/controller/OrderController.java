@@ -75,7 +75,7 @@ public class OrderController {
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	
-	@GetMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
+	@GetMapping( produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ResponseStructure<Orders>> getOrderById(@RequestParam int id) {
 		return service.getOrderById(id);
@@ -92,8 +92,7 @@ public class OrderController {
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	
-	@DeleteMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
-			MediaType.APPLICATION_JSON_VALUE })
+	@DeleteMapping
 	public ResponseEntity<ResponseStructure<String>> deleteOrder(@RequestBody Orders orders,@RequestParam int id) {
 		return service.deleteOrderById(orders, id);
 		
