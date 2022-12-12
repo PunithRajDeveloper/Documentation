@@ -35,11 +35,11 @@ public class OrderService {
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		if (orders1.isPresent()) {
-			orders.setId(id);
-
+			
+			//orders.setId(id);
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Updated");
-			responseStructure.setData(dao.saveOrder(orders));
+			responseStructure.setData(dao.updateOrder(orders));
 			return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.OK);
 		}
 		throw new UnableToUpdateException("UnableToUpdate");
