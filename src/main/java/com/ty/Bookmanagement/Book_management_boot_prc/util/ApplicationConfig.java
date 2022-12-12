@@ -28,7 +28,7 @@ public class ApplicationConfig {
 				"apache tomecate", "www.apache.cpom", extensions);
 
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.tyss.foodappBySpringBoot.Project_FoodApp_By_SpringBoot"))
+				.apis(RequestHandlerSelectors.basePackage("com.ty.Bookmanagement.Book_management_boot_prc"))
 				.build();
 
 	}
