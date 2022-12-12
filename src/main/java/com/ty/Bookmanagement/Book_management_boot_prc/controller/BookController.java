@@ -22,43 +22,30 @@ public class BookController {
 
 	@Autowired
 	private BookService service;
-	
+
 	@PostMapping
-	public ResponseEntity<ResponseStructure<Book>> saveBook(@RequestBody Book book)
-	{
-		return service.saveBook(book);
+	public ResponseEntity<ResponseStructure<Book>> saveBook(@RequestBody Book book, @RequestParam int id) {
+		return service.saveBook(book, id);
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<ResponseStructure<Book>> getBook(@RequestParam int id)
-	{
+	public ResponseEntity<ResponseStructure<Book>> getBook(@RequestParam int id) {
 		return service.getBookById(id);
 	}
-	
-	@GetMapping(("/{catagory}"))
-	public ResponseEntity<ResponseStructure<Book>> getCatagory(@PathVariable String catagory)
-	{
-		return service.getBookByCatagory(catagory);
+
+	@GetMapping("/{title}")
+	public ResponseEntity<ResponseStructure<Book>> getTitle(@PathVariable String title) {
+		return service.getBookByTitle(title);
 	}
- 
-	
-//	@GetMapping("/{title}")
-//	public ResponseEntity<ResponseStructure<Book>> getTitle(@PathVariable String title)
-//	{
-//		return service.getBookByTitle(title);
-//	}
+
 	@PutMapping
-	public ResponseEntity<ResponseStructure<Book>> updateBook(@RequestBody Book book, @RequestParam int id)
-	{
+	public ResponseEntity<ResponseStructure<Book>> updateBook(@RequestBody Book book, @RequestParam int id) {
 		return service.updateBook(id, book);
 	}
-	
-	@DeleteMapping
-	public ResponseEntity<ResponseStructure<String>> deleteBook(@RequestParam int id)
-	{
-		return service.deleteById(id);
-	}
-	}
-	
-	
 
+//	@DeleteMapping
+//	public ResponseEntity<ResponseStructure<String>> deleteBook(@RequestParam int id)
+//	{
+//		return service.deleteById(id);
+//	}
+}
