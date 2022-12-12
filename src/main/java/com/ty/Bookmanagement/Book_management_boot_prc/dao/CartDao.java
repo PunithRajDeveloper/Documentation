@@ -22,7 +22,7 @@ public Cart updateCart(Cart cart)
 	return cartrepo.save(cart);
 }
 
-public Optional<Cart> findCartById(int id)
+public Optional<Cart> getCartById(int id)
 {
 	return cartrepo.findById(id);
 	

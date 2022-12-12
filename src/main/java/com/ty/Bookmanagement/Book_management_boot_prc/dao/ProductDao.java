@@ -22,7 +22,7 @@ public class ProductDao {
 		return productrepo.save(product);
 	}
 
-	public Optional<Product> findProductById(int id)
+	public Optional<Product> getProductById(int id)
 	{
 		return productrepo.findById(id);
 		

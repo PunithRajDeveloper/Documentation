@@ -17,7 +17,7 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 @Service
 public class CartService {
 	@Autowired
-	private CartDao dao;
+	 CartDao dao;
 
 	public ResponseEntity<ResponseStructure<Cart>> saveCart(Cart cart) {
 		ResponseStructure<Cart> responseStructure = new ResponseStructure<Cart>();
@@ -29,22 +29,22 @@ public class CartService {
 	}
 
 	public ResponseEntity<ResponseStructure<Cart>> getCartById(int id) {
-		Optional<Cart> cart = dao.findCartById(id);
-		ResponseStructure<Cart> responseStructure = new ResponseStructure<>();
+		Optional<Cart> cart = dao.getCartById(id);
+		ResponseStructure<Cart> responseStructure = new ResponseStructure<Cart>();
 
 		if (cart.isPresent()) {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail received");
 			responseStructure.setData(cart.get());
 			return new ResponseEntity<ResponseStructure<Cart>>(responseStructure,
-					HttpStatus.OK);
+					HttpStatus.FOUND);
 		} 
 		throw new NoSuchIdFoundException();
 	}
 
 	public ResponseEntity<ResponseStructure<Cart>> UpdateCart(Cart cart, int id) {
-       Optional<Cart> cart2=dao.findCartById(id);
-		ResponseStructure<Cart> responseStructure = new ResponseStructure<>();
+       Optional<Cart> cart2=dao.getCartById(id);
+		ResponseStructure<Cart> responseStructure = new ResponseStructure<Cart>();
 		
 		if (cart2.isPresent()) {
 			cart.setId(id);
@@ -57,9 +57,9 @@ public class CartService {
 		throw new UnableToUpdateException();
 	}
 
-	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
+	public ResponseEntity<ResponseStructure<String>> deleteById( int id) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
-		Optional<Cart> cart3 = dao.findCartById(id);
+		Optional<Cart> cart3 = dao.getCartById(id);
 
 		if (cart3.isPresent()) {
 			dao.deleteCart(cart3.get());
@@ -69,7 +69,7 @@ public class CartService {
 			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		}
 
-		throw new UnableToDeleteException();
+		throw new UnableToDeleteException("unable");
 
 	}
 }
