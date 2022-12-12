@@ -10,12 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.BookDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
-import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
-import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchCatagoryFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
-import com.ty.Bookmanagement.Book_management_boot_prc.repo.BookRepositery;
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
@@ -23,7 +20,7 @@ public class BookService {
 	@Autowired
 	private BookDao bookDao;
 
-	ResponseEntity<ResponseStructure<Book>> saveBook(Book book) {
+	public ResponseEntity<ResponseStructure<Book>> saveBook(Book book) {
 		ResponseEntity<ResponseStructure<Book>> entity;
 		ResponseStructure<Book> responseStructure = new ResponseStructure();
 		responseStructure.setStatus(HttpStatus.CREATED.value());
@@ -32,7 +29,7 @@ public class BookService {
 		return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.CREATED);
 	}
 
-	ResponseEntity<ResponseStructure<Book>> getBookById(int id) {
+	public ResponseEntity<ResponseStructure<Book>> getBookById(int id) {
 		ResponseEntity<ResponseStructure<Book>> entity;
 		ResponseStructure<Book> responseStructure = new ResponseStructure();
 		Optional<Book> book = bookDao.getBookbyId(id);
@@ -46,7 +43,7 @@ public class BookService {
 		throw new NoSuchIdFoundException();
 	}
 
-	ResponseEntity<ResponseStructure<Book>> getBookByCatagory(String category) {
+	public ResponseEntity<ResponseStructure<Book>> getBookByCatagory(String category) {
 		ResponseEntity<ResponseStructure<Book>> entity;
 		ResponseStructure<Book> responseStructure = new ResponseStructure();
 		Book book = bookDao.getBookbyCategory(category);
@@ -59,7 +56,7 @@ public class BookService {
 		throw new NoSuchCatagoryFoundException();
 	}
 
-	ResponseEntity<ResponseStructure<Book>> getBookByTitle(String title) {
+	public ResponseEntity<ResponseStructure<Book>> getBookByTitle(String title) {
 		ResponseEntity<ResponseStructure<Book>> entity;
 		ResponseStructure<Book> responseStructure = new ResponseStructure();
 		responseStructure.setStatus(HttpStatus.OK.value());
@@ -68,13 +65,13 @@ public class BookService {
 		return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.OK);
 	}
 
-	ResponseEntity<ResponseStructure<Book>> updateBook(int id, Book book) {
+	public ResponseEntity<ResponseStructure<Book>> updateBook(int id, Book book) {
 
 		ResponseEntity<ResponseStructure<Book>> entity;
 		ResponseStructure<Book> responseStructure = new ResponseStructure();
 		Book b2 = bookDao.getBookbyId(id).get();
 		if (b2 != null) {
-			b2.setId(id);
+			book.setId(id);
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Updated");
 			responseStructure.setData(bookDao.updateBookbyId(book));
@@ -82,17 +79,16 @@ public class BookService {
 		}
 		throw new UnableToUpdateException();
 	}
-	
-	ResponseEntity<ResponseStructure<String>> deleteById(int id) {
-		
-	
+
+	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
+
 		ResponseEntity<ResponseStructure<String>> entity;
 		ResponseStructure<String> responseStructure = new ResponseStructure();
 		Book b2 = bookDao.getBookbyId(id).get();
 		b2.setId(0);
 		bookDao.updateBookbyId(b2);
 		if (b2 != null) {
-			
+
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
 			responseStructure.setData(bookDao.deleteBookbyId(id));
