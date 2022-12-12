@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.BookDao;
+import com.ty.Bookmanagement.Book_management_boot_prc.dao.UserDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchCatagoryFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
@@ -20,13 +22,27 @@ public class BookService {
 	@Autowired
 	private BookDao bookDao;
 
-	public ResponseEntity<ResponseStructure<Book>> saveBook(Book book) {
+	@Autowired
+	private UserDao dao;
+
+	public ResponseEntity<ResponseStructure<Book>> saveBook(Book book, int id) {
 		ResponseEntity<ResponseStructure<Book>> entity;
 		ResponseStructure<Book> responseStructure = new ResponseStructure();
-		responseStructure.setStatus(HttpStatus.CREATED.value());
-		responseStructure.setMessage("Saved");
-		responseStructure.setData(bookDao.saveBook(book));
-		return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.CREATED);
+		User u1 = dao.getUsreById(id).get();
+		List<Book> list = u1.getBooks();
+		if (u1 != null) {
+
+			responseStructure.setStatus(HttpStatus.CREATED.value());
+			responseStructure.setMessage("Saved");
+			Book b1 = book;
+			list.add(b1);
+			u1.setBooks(list);
+			responseStructure.setData(bookDao.saveBook(book));
+			return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.CREATED);
+
+		}
+		throw new NoSuchIdFoundException();
+
 	}
 
 	public ResponseEntity<ResponseStructure<Book>> getBookById(int id) {
@@ -85,7 +101,7 @@ public class BookService {
 		ResponseEntity<ResponseStructure<String>> entity;
 		ResponseStructure<String> responseStructure = new ResponseStructure();
 		Book b2 = bookDao.getBookbyId(id).get();
-		b2.setId(0);
+
 		bookDao.updateBookbyId(b2);
 		if (b2 != null) {
 
