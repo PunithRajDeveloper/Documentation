@@ -69,7 +69,7 @@ public class UserController {
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
-	@GetMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
+	@GetMapping( produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ResponseStructure<User>> getUserById(@RequestParam int id) {
 		return userService.getUserById(id);
@@ -86,8 +86,7 @@ public class UserController {
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
-	@DeleteMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
-			MediaType.APPLICATION_JSON_VALUE })
+	@DeleteMapping
 	public ResponseEntity<ResponseStructure<String>> deleteUser(@RequestParam int id) {
 		return userService.deleteById(id);
 		
