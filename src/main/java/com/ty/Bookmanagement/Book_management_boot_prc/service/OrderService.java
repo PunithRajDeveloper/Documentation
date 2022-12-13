@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.CartDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.OrderDao;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Orders;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
@@ -22,7 +23,9 @@ public class OrderService {
 	@Autowired
 	private CartDao cartDao;
 
-	public ResponseEntity<ResponseStructure<Orders>> saveOrder(Orders orders) {
+	public ResponseEntity<ResponseStructure<Orders>> saveOrder(Orders orders, int id) {
+		Cart cart = cartDao.getCartById(id).get();
+		orders.setCart(cart);
 
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		responseStructure.setStatus(HttpStatus.CREATED.value());
@@ -37,8 +40,8 @@ public class OrderService {
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		if (orders1.isPresent()) {
-			
-			//orders.setId(id);
+
+			// orders.setId(id);
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Updated");
 			responseStructure.setData(dao.updateOrder(orders));

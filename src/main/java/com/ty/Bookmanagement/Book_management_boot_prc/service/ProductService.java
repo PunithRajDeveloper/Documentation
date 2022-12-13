@@ -1,5 +1,7 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ty.Bookmanagement.Book_management_boot_prc.dao.BookDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.ProductDao;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Product;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
@@ -18,11 +22,17 @@ public class ProductService {
 	@Autowired
 	ProductDao dao;
 	
-
-	public ResponseEntity<ResponseStructure<Product>> saveProduct(Product product) {
-		ResponseStructure<Product> responseStructure = new ResponseStructure<Product>();
-		
+	@Autowired
+	BookDao bookDao;
 	
+
+	public ResponseEntity<ResponseStructure<Product>> saveProduct(Product product, String title) {
+		ResponseStructure<Product> responseStructure = new ResponseStructure<Product>();
+		Book book=bookDao.getBookByTitle(title);
+	
+		List<Book> books=new ArrayList<Book>();
+		books.add(book);
+		 product.setBooks(books);
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Product detail saved sucessfully");
 		responseStructure.setData(dao.saveProduct(product));

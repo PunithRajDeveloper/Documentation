@@ -38,8 +38,8 @@ public class ProductController {
 		@ApiResponse(code = 500, message = "imternal server error"), })
 @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 		MediaType.APPLICATION_JSON_VALUE })
-	   public ResponseEntity<ResponseStructure<Product>> saveProduct (@RequestBody Product product){
-		   return productservice.saveProduct(product);
+	   public ResponseEntity<ResponseStructure<Product>> saveProduct (@RequestBody Product product,@RequestParam String title){
+		   return productservice.saveProduct(product,title);
 		
 	}
 	   

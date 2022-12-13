@@ -40,8 +40,8 @@ public class OrderController {
 	
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<Orders>> saveOrder(@RequestBody Orders orders) {
-		return service.saveOrder(orders);
+	public ResponseEntity<ResponseStructure<Orders>> saveOrder(@RequestBody Orders orders,@RequestParam int id) {
+		return service.saveOrder(orders,id);
 
 	}
 	
@@ -60,7 +60,7 @@ public class OrderController {
 	@PutMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ResponseStructure<Orders>> updateOrder(@RequestBody Orders orders,@RequestParam int id) {
-		return service.saveOrder(orders);
+		return service.updateOrder(orders, id);
 	}
 	
 	

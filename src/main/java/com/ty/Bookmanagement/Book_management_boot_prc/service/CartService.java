@@ -1,5 +1,7 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.CartDao;
+import com.ty.Bookmanagement.Book_management_boot_prc.dao.ProductDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Product;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
@@ -18,9 +22,18 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 public class CartService {
 	@Autowired
 	 CartDao dao;
+	@Autowired
+	ProductDao productDao;
 
-	public ResponseEntity<ResponseStructure<Cart>> saveCart(Cart cart) {
+	public ResponseEntity<ResponseStructure<Cart>> saveCart(Cart cart,int id) {
 		ResponseStructure<Cart> responseStructure = new ResponseStructure<Cart>();
+		Product product=productDao.getProductById(id).get();
+		
+		List<Product> products=new ArrayList<Product>();
+		products.add(product);
+		
+		cart.setProducts(products);
+		
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Cart detail saved sucessfully");
 		responseStructure.setData(dao.saveCart(cart));

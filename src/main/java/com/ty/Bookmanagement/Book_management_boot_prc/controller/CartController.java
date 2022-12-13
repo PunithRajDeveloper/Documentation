@@ -38,8 +38,8 @@ CartService cartService;
 		@ApiResponse(code = 500, message = "imternal server error"), })
 @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 		MediaType.APPLICATION_JSON_VALUE })
-   public ResponseEntity<ResponseStructure<Cart>> saveCart (@RequestBody Cart cart){
-	   return cartService.saveCart(cart);
+   public ResponseEntity<ResponseStructure<Cart>> saveCart (@RequestBody Cart cart,@RequestParam int id){
+	   return cartService.saveCart(cart,id);
 	
 }
    
