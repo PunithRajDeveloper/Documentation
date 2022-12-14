@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.BookDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.ProductDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Product;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
@@ -26,13 +28,14 @@ public class ProductService {
 	BookDao bookDao;
 	
 
+
 	public ResponseEntity<ResponseStructure<Product>> saveProduct(Product product, String title) {
 		ResponseStructure<Product> responseStructure = new ResponseStructure<Product>();
 		Book book=bookDao.getBookByTitle(title);
 	
-		List<Book> books=new ArrayList<Book>();
+		List<Book> books=new ArrayList();
 		books.add(book);
-		 product.setBooks(books);
+		product.setBooks(books);
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Product detail saved sucessfully");
 		responseStructure.setData(dao.saveProduct(product));
