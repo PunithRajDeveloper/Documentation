@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.CartDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.ProductDao;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Product;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
@@ -24,16 +25,25 @@ public class CartService {
 	 CartDao dao;
 	@Autowired
 	ProductDao productDao;
-
-	public ResponseEntity<ResponseStructure<Cart>> saveCart(Cart cart,int id) {
+	
+	public ResponseEntity<ResponseStructure<Cart>> saveCart(Cart cart, int pid) {
 		ResponseStructure<Cart> responseStructure = new ResponseStructure<Cart>();
-		Product product=productDao.getProductById(id).get();
 		
-		List<Product> products=new ArrayList<Product>();
-		products.add(product);
+		Product product=productDao.getProductById(pid).get();
+		List<Book> book=product.getBooks();
+		product.setId(pid);
+		List<Product> products=cart.getProducts();
 		
 		cart.setProducts(products);
-		
+		product.setId(pid);
+		productDao.updateProduct(product);
+		double totalcost=0;
+		for(Book b : book)
+		{
+			totalcost=totalcost+(b.getPrice()*product.getQuantity());
+		}
+		cart.setTotalcost((totalcost*0.18)+totalcost);
+				
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Cart detail saved sucessfully");
 		responseStructure.setData(dao.saveCart(cart));
