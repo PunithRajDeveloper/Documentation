@@ -27,10 +27,6 @@ public class Book {
 	private double price;
 	private String auther;
 	private String publications;
-	@Override
-	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", category=" + category + ", price=" + price + ", auther="
-				+ auther + ", publications=" + publications + "]";
-	}
+	
 		
 }

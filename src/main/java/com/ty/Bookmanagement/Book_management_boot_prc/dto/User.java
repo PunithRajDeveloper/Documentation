@@ -7,8 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Convert;
 
-import javax.persistence.CascadeType;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,6 +29,8 @@ public class User {
 	@NotNull(message = "Enter the present address")
   private String address;
 	@NotNull(message = "Enter an active phone number to contact")
+	 @Convert(converter = AesEncryption.class)
+	private String password;
 	private long phonNum;
   @Convert(converter = AesEncryption.class)
 	private String email;

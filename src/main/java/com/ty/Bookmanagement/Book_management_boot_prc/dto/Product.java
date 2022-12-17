@@ -21,8 +21,5 @@ public class Product {
 	private int quantity;
 	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Book> books;
-	@Override
-	public String toString() {
-		return "Product [id=" + id + ", quantity=" + quantity + ", books=" + books + "]";
-	}
+	
 }
