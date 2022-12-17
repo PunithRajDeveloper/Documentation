@@ -1,5 +1,6 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.dto;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class Orders {
 	private String address;
 	@NotNull(message = "Enter an active phone number to contact")
 	private long phone;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE)
 	private Cart cart;
 
 }

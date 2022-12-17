@@ -18,13 +18,9 @@ public class BookDao {
 		return repositery.save(book);
 	}
 
-	public Book getBookbyId(int id) {
-		Optional<Book> optional = repositery.findById(id);
-		if (optional.isPresent()) {
-			return optional.get();
-		} else {
-			return null;
-		}
+	public Optional<Book> getBookbyId(int id) {
+
+		return repositery.findById(id);
 	}
 
 	public Book getBookbyCategory(String category) {

@@ -3,8 +3,11 @@ package com.ty.Bookmanagement.Book_management_boot_prc.dto;
 import java.util.List;
 
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Convert;
+
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,12 +27,12 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@NotNull(message = "enter name of the seller")
-        private String name;
+	private String name;
 	@NotNull(message = "Enter the present address")
-	private String address;	
+  private String address;
 	@NotNull(message = "Enter an active phone number to contact")
 	private long phonNum;
-	@Convert(converter = AesEncryption.class)
+  @Convert(converter = AesEncryption.class)
 	private String email;
 	private String gender;
 

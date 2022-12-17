@@ -2,6 +2,7 @@ package com.ty.Bookmanagement.Book_management_boot_prc.dto;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,10 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
 	private int quantity;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.REMOVE)
 	private List<Book> books;
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", quantity=" + quantity + ", books=" + books + "]";
+	}
 }

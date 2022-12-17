@@ -1,5 +1,7 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.dao;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,14 +22,14 @@ public class ProductDao {
 		return productrepo.save(product);
 	}
 
-	public Product findProductById(int id)
+	public Optional<Product> getProductById(int id)
 	{
-		return productrepo.findById(id).get();
+		return productrepo.findById(id);
 		
 	}
-	public String deleteProduct(Product product)
+	public void deleteProduct(Product product)
 	{
 		productrepo.delete(product);
-		return "deleted";
+		
 	}
 }
