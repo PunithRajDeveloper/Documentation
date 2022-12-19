@@ -93,8 +93,8 @@ public class OrderController {
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	
 	@DeleteMapping
-	public ResponseEntity<ResponseStructure<String>> deleteOrder(@RequestBody Orders orders,@RequestParam int id) {
-		return service.deleteOrderById(orders, id);
+	public ResponseEntity<ResponseStructure<String>> deleteOrder(@RequestParam int id) {
+		return service.deleteOrderById(id);
 		
 	}
 

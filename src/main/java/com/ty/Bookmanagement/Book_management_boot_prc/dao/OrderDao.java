@@ -26,9 +26,10 @@ public  class OrderDao {
 	{
 		return repo.findById(id);
 	}
-	public void deleteOrders(Orders orders)
+	public String deleteOrders(int id)
 	{
-		repo.delete(orders);
+		repo.deleteById(id);
+		return "deleted";
 		
 	}
 
