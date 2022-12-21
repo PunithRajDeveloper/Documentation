@@ -1,0 +1,2 @@
+[2022-12-21 10:42:46,125] http-nio-8080-exec-2 com.ty.Bookmanagement.Book_management_boot_prc.service.UserService 38 WARN   - Email already Found
+[2022-12-21 10:43:26,622] http-nio-8080-exec-3 com.ty.Bookmanagement.Book_management_boot_prc.service.UserService 35 INFO   - SAVED USER TO USER TABLE

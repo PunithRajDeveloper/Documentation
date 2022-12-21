@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,9 +70,8 @@ public class UserController {
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
-	@GetMapping( produces = {
-			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<User>> getUserById(@RequestParam int id) {
+	@GetMapping("/{id}")
+	public ResponseEntity<ResponseStructure<User>> getUserById(@PathVariable int id) {
 		return userService.getUserById(id);
 		
 	}
@@ -89,6 +89,22 @@ public class UserController {
 	@DeleteMapping
 	public ResponseEntity<ResponseStructure<String>> deleteUser(@RequestParam int id) {
 		return userService.deleteById(id);
+		
+	}
+	
+	@ApiOperation(value = "used to login user", notes = "its used to get login user by validating")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
+			@ApiResponse(code = 202, message = "accepted"),
+			@ApiResponse(code = 203, message = "non-authoritataive information"),
+			@ApiResponse(code = 302, message = "found"), @ApiResponse(code = 304, message = "not spacified"),
+			@ApiResponse(code = 400, message = "bad request"), @ApiResponse(code = 401, message = "unathorized"),
+			@ApiResponse(code = 402, message = "payment requried"), @ApiResponse(code = 403, message = "forbidden"),
+			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
+			@ApiResponse(code = 408, message = "request timeout"),
+			@ApiResponse(code = 500, message = "imternal server error"), })
+	@GetMapping 
+	public ResponseEntity<ResponseStructure<User>> getUserByemail(@RequestParam String email, @RequestParam String password) {
+		return userService.getUserbyEmail(email, password);
 		
 	}
 

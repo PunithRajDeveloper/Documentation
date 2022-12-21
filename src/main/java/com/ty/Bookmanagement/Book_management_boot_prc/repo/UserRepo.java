@@ -6,4 +6,8 @@ import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
 
 public interface UserRepo extends JpaRepository<User, Integer>{
 
+	
+	public User getByEmail(String email);
+
+
 }
