@@ -30,4 +30,9 @@ public class UserDao {
 		userRepo.delete(user);
 
 	}
+	
+	public User getEmail(String email)
+	{
+		return userRepo.getByEmail(email);
+	}
 }
