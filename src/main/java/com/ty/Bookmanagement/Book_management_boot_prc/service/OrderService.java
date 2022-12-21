@@ -40,8 +40,9 @@ public class OrderService {
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		if (orders1.isPresent()) {
-
-			// orders.setId(id);
+Orders o1=orders1.get();
+			orders.setId(id);
+			orders.setCart(o1.getCart());
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Updated");
 			responseStructure.setData(dao.updateOrder(orders));
@@ -65,15 +66,15 @@ public class OrderService {
 
 	}
 
-	public ResponseEntity<ResponseStructure<String>> deleteOrderById(Orders orders, int id) {
+	public ResponseEntity<ResponseStructure<String>> deleteOrderById(int id) {
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 
 		if (orders1.isPresent()) {
-			dao.deleteOrders(orders);
+			
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
-			responseStructure.setData("Deleted");
+			responseStructure.setData(dao.deleteOrders(id));
 			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 
 		}
