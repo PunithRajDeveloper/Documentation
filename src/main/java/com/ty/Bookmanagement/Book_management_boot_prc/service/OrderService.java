@@ -2,6 +2,7 @@ package com.ty.Bookmanagement.Book_management_boot_prc.service;
 
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
 public class OrderService {
+	private static final Logger logger = Logger.getLogger(UserService.class);
 	@Autowired
 	private OrderDao dao;
 	@Autowired
@@ -32,6 +34,7 @@ public class OrderService {
 		responseStructure.setMessage("Data Saved");
 		cartDao.saveCart(orders.getCart());
 		responseStructure.setData(dao.saveOrder(orders));
+		logger.info("SAVED ORDER TO ORDER  TABLE");
 		return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.CREATED);
 	}
 
@@ -40,14 +43,17 @@ public class OrderService {
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		if (orders1.isPresent()) {
-Orders o1=orders1.get();
+			Orders o1 = orders1.get();
 			orders.setId(id);
 			orders.setCart(o1.getCart());
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Updated");
 			responseStructure.setData(dao.updateOrder(orders));
+			logger.info("UPDATED ORDER");
 			return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.OK);
 		}
+		logger.error("NO SUCH ORDER FOUND");
+
 		throw new UnableToUpdateException("UnableToUpdate");
 
 	}
@@ -59,9 +65,11 @@ Orders o1=orders1.get();
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Received");
 			responseStructure.setData(dao.findOrdersById(id).get());
+			logger.info("FOUND ORDER");
 			return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.OK);
 
 		}
+		logger.error("NO SUCH ID FOUND");
 		throw new NoSuchIdFoundException();
 
 	}
@@ -71,13 +79,15 @@ Orders o1=orders1.get();
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 
 		if (orders1.isPresent()) {
-			
+
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
 			responseStructure.setData(dao.deleteOrders(id));
+			logger.warn("DELETED ORDER");
 			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 
 		}
+		logger.error("Order not found");
 		throw new UnableToDeleteException("UnableToDelete");
 
 	}
