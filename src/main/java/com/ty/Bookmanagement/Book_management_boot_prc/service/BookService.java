@@ -3,6 +3,7 @@ package com.ty.Bookmanagement.Book_management_boot_prc.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,8 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
 public class BookService {
+	private static final Logger logger=Logger.getLogger(BookService.class);
+	
 	@Autowired
 	private BookDao bookDao;
 
@@ -38,9 +41,11 @@ public class BookService {
 			list.add(b1);
 			u1.setBooks(list);
 			responseStructure.setData(bookDao.saveBook(book));
+			logger.info("BOOK SAVED");
 			return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.CREATED);
 
 		}
+		logger.error("BOOK FAILED TO DAVE");
 		throw new NoSuchIdFoundException();
 
 	}
@@ -53,9 +58,10 @@ public class BookService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Found");
 			responseStructure.setData(bookDao.getBookbyId(id).get());
+			logger.info("BOOK FOUND");
 			return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.OK);
 		}
-
+         logger.error("BOOK ID NOT FOUND");
 		throw new NoSuchIdFoundException();
 	}
 
@@ -67,8 +73,10 @@ public class BookService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Found");
 			responseStructure.setData(bookDao.getBookbyCategory(category));
+			logger.info("BOOK CATEGORY FOUND");
 			return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.OK);
 		}
+		logger.error("BOOK CATEGORY NOT FOUND");
 		throw new NoSuchCatagoryFoundException();
 	}
 
@@ -78,6 +86,7 @@ public class BookService {
 		responseStructure.setStatus(HttpStatus.OK.value());
 		responseStructure.setMessage("Found");
 		responseStructure.setData(bookDao.getBookByTitle(title));
+		logger.info("BOOK TITLE FOUND");
 		return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.OK);
 	}
 
@@ -91,8 +100,10 @@ public class BookService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Updated");
 			responseStructure.setData(bookDao.updateBookbyId(book));
+			logger.info("BOOK UPDATED");
 			return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.OK);
 		}
+		logger.error("BOOK FAILED TO UPDATE");
 		throw new UnableToUpdateException();
 	}
 
@@ -108,8 +119,10 @@ public class BookService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
 			responseStructure.setData(bookDao.deleteBookbyId(id));
+			logger.info("BOOK DELETED");
 			return entity = new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		}
+		logger.error("BOOK FAILED TO DELETE");
 		throw new NoSuchIdFoundException();
 	}
 
