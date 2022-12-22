@@ -1,4 +1,0 @@
-[2022-12-22 16:34:11,248] http-nio-8080-exec-1 com.ty.Bookmanagement.Book_management_boot_prc.service.UserService 37 INFO   - SAVED ORDER TO ORDER  TABLE
-[2022-12-22 16:35:53,863] http-nio-8080-exec-3 com.ty.Bookmanagement.Book_management_boot_prc.service.UserService 37 INFO   - SAVED ORDER TO ORDER  TABLE
-[2022-12-22 16:41:46,624] http-nio-8080-exec-5 com.ty.Bookmanagement.Book_management_boot_prc.service.UserService 37 INFO   - SAVED ORDER TO ORDER  TABLE
-[2022-12-22 17:10:33,703] http-nio-8080-exec-2 com.ty.Bookmanagement.Book_management_boot_prc.service.UserService 43 INFO   - SAVED ORDER TO ORDER  TABLE
