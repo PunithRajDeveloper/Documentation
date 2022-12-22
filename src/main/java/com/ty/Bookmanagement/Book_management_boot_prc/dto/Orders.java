@@ -27,5 +27,6 @@ public class Orders {
 	private long phone;
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Cart cart;
+	private String date;
 
 }
