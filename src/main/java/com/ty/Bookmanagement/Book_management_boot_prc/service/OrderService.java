@@ -1,5 +1,6 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -28,7 +29,9 @@ public class OrderService {
 	public ResponseEntity<ResponseStructure<Orders>> saveOrder(Orders orders, int id) {
 		Cart cart = cartDao.getCartById(id).get();
 		orders.setCart(cart);
-
+		LocalDateTime dateTime = LocalDateTime.now();
+		String date = String.valueOf(dateTime);
+		orders.setDate(date);
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Data Saved");

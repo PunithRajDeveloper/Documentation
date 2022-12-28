@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,8 @@ public class ProductService {
 	@Autowired
 	BookDao bookDao;
 	
+	private static final Logger logger=Logger.getLogger(ProductService.class);
+
 
 
 	public ResponseEntity<ResponseStructure<Product>> saveProduct(Product product, String title) {
@@ -39,6 +42,7 @@ public class ProductService {
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Product detail saved sucessfully");
 		responseStructure.setData(dao.saveProduct(product));
+		logger.info("added Book to product");
 		return new ResponseEntity<ResponseStructure<Product>>(
 				responseStructure, HttpStatus.CREATED);
 	}
@@ -52,10 +56,11 @@ public class ProductService {
 			responseStructure.setStatus(HttpStatus.FOUND.value());
 			responseStructure.setMessage("Cart detail received");
 			responseStructure.setData(product.get());
-		
+		logger.info("Product Found");
 		return new ResponseEntity<ResponseStructure<Product>>(
 				responseStructure, HttpStatus.FOUND);
 	}
+		logger.error("Product not Found");
 	  throw new NoSuchIdFoundException();
 	}
 	
@@ -69,10 +74,11 @@ public class ProductService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail update Sucessfully");
 			responseStructure.setData(dao.updateProduct(product));
-		
+		logger.info("Updated succcefully");
 		return new ResponseEntity<ResponseStructure<Product>>(
 				responseStructure, HttpStatus.OK);
 	}
+		logger.error("No such Id found");
 	  throw new UnableToUpdateException()	;
 	}
 	
@@ -86,10 +92,11 @@ public class ProductService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
 			responseStructure.setData("Deleted");
+			logger.warn("deleted");
 		return new ResponseEntity<ResponseStructure<String>>(
 				responseStructure, HttpStatus.OK);
 		}
-		
+		logger.error("unable to delete");
 		throw new UnableToDeleteException();
 	}
 }
