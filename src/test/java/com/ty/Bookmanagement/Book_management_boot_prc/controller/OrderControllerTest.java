@@ -11,32 +11,33 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Orders;
 import com.ty.Bookmanagement.Book_management_boot_prc.repo.OrderRepo;
+
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
 class OrderControllerTest {
-    @Autowired
+	@Autowired
 	OrderRepo repo;
 
 	@Test
 	@Order(1)
 	void testSaveOrder() {
-		Orders orders=new Orders();
+		Orders orders = new Orders();
 		orders.setName("Sona");
 		orders.setPhone(66766);
 		orders.setCart(null);
 		orders.setAddress("JayDeva");
-		//orders.setDate(null);
-         repo.save(orders);
+		// orders.setDate(null);
+		repo.save(orders);
 	}
 
 	@Test
 	@Order(2)
 	void testUpdateOrder() {
-	     Orders orders=repo.findById(1).get();
+		Orders orders = repo.findById(1).get();
 		orders.setName("Sona");
 		orders.setName("Sona");
-		assertEquals("Sona",orders.getName());
-		//assertNotNull(repo.findById(1));
+		assertEquals("Sona", orders.getName());
+		// assertNotNull(repo.findById(1));
 	}
 
 	@Test
@@ -50,6 +51,5 @@ class OrderControllerTest {
 	void testDeleteOrder() {
 		repo.deleteById(1);
 	}
-	
 
 }
