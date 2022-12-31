@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Orders;
-import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
 import com.ty.Bookmanagement.Book_management_boot_prc.service.OrderService;
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
@@ -25,9 +25,9 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("order")
 public class OrderController {
 	@Autowired
-	private OrderService service;
-
-	@ApiOperation(value = "save Order", notes = "its used to save order")
+	OrderService service;
+	
+	@ApiOperation(value = "save order", notes = "its used to save order")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
 			@ApiResponse(code = 202, message = "accepted"),
 			@ApiResponse(code = 203, message = "non-authoritataive information"),
@@ -36,17 +36,28 @@ public class OrderController {
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
-	
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<Orders>> saveOrder(@RequestBody Orders orders,@RequestParam int id) {
-		return service.saveOrder(orders,id);
-
+	public ResponseEntity<ResponseStructure<Orders>> saveBook(@RequestBody Orders order, @RequestParam int id) {
+		return service.saveOrder(order, id);
 	}
 	
+	@ApiOperation(value = "used to get order", notes = "its used to get order data by id")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
+			@ApiResponse(code = 202, message = "accepted"),
+			@ApiResponse(code = 203, message = "non-authoritataive information"),
+			@ApiResponse(code = 400, message = "bad request"), @ApiResponse(code = 401, message = "unathorized"),
+			@ApiResponse(code = 402, message = "payment requried"), @ApiResponse(code = 403, message = "forbidden"),
+			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
+			@ApiResponse(code = 408, message = "request timeout"),
+			@ApiResponse(code = 500, message = "imternal server error"), })
+	@GetMapping( produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<ResponseStructure<Orders>> getBook(@RequestParam int id) {
+		return service.getOrderById(id);
+	}
 	
-	
-	@ApiOperation(value = "update order", notes = "its used to update order")
+	@ApiOperation(value = "update order", notes = "its user to update order")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
 			@ApiResponse(code = 202, message = "accepted"),
 			@ApiResponse(code = 203, message = "non-authoritataive information"),
@@ -57,12 +68,11 @@ public class OrderController {
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@PutMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<Orders>> updateOrder(@RequestBody Orders orders,@RequestParam int id) {
+	public ResponseEntity<ResponseStructure<Orders>> updateBook(@RequestBody Orders orders , @RequestParam int id) {
 		return service.updateOrder(orders, id);
 	}
 	
-	
-	@ApiOperation(value = "get order", notes = "its used get order")
+	@ApiOperation(value = "delete order", notes = "its user to delete order")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
 			@ApiResponse(code = 202, message = "accepted"),
 			@ApiResponse(code = 203, message = "non-authoritataive information"),
@@ -71,29 +81,9 @@ public class OrderController {
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
-	
-	@GetMapping( produces = {
-			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<Orders>> getOrderById(@RequestParam int id) {
-		return service.getOrderById(id);
-		
-	}
-	@ApiOperation(value = "delete oreder", notes = "its used to delete order")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
-			@ApiResponse(code = 202, message = "accepted"),
-			@ApiResponse(code = 203, message = "non-authoritataive information"),
-			@ApiResponse(code = 400, message = "bad request"), @ApiResponse(code = 401, message = "unathorized"),
-			@ApiResponse(code = 402, message = "payment requried"), @ApiResponse(code = 403, message = "forbidden"),
-			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
-			@ApiResponse(code = 408, message = "request timeout"),
-			@ApiResponse(code = 500, message = "imternal server error"), })
-	
 	@DeleteMapping
-	public ResponseEntity<ResponseStructure<String>> deleteOrder(@RequestParam int id) {
+	public ResponseEntity<ResponseStructure<String>> deleteBook(@RequestParam int id)
+	{
 		return service.deleteOrderById(id);
-		
 	}
-
-	
-
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
 public class CartService {
+	public static final Logger logger=Logger.getLogger(CartService.class);
+	
 	@Autowired
 	 CartDao dao;
 	@Autowired
@@ -48,6 +51,7 @@ public class CartService {
 		responseStructure.setMessage("Cart detail saved sucessfully");
 		cart.setProducts(list);
 		responseStructure.setData(dao.saveCart(cart));
+		logger.info("saved cart");
 		return new ResponseEntity<ResponseStructure<Cart>>(responseStructure,
 				HttpStatus.CREATED);
 	}
@@ -60,9 +64,11 @@ public class CartService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail received");
 			responseStructure.setData(cart.get());
+			logger.info("found cart");
 			return new ResponseEntity<ResponseStructure<Cart>>(responseStructure,
 					HttpStatus.FOUND);
 		} 
+		logger.error("Id not found");
 		throw new NoSuchIdFoundException();
 	}
 
@@ -75,9 +81,11 @@ public class CartService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Cart detail update Sucessfully");
 			responseStructure.setData(dao.updateCart(cart));
+			logger.info("updated cart");
 			return new ResponseEntity<ResponseStructure<Cart>>(
 					responseStructure, HttpStatus.OK);
 		} 
+		logger.error("Unable to updated");
 		throw new UnableToUpdateException();
 	}
 
@@ -90,9 +98,10 @@ public class CartService {
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
 			responseStructure.setData("Deleted");
+			logger.warn("deleted");
 			return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		}
-
+		logger.error("Unable to delete");
 		throw new UnableToDeleteException("unable");
 
 	}
