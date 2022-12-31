@@ -46,6 +46,8 @@ public class OrderService {
 		Optional<Orders> orders1 = dao.findOrdersById(id);
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		if (orders1.isPresent()) {
+			LocalDateTime dateTime = LocalDateTime.now();
+            orders.setDate(String.valueOf(dateTime));
 			Orders o1 = orders1.get();
 			orders.setId(id);
 			orders.setCart(o1.getCart());
