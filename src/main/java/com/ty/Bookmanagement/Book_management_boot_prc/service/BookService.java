@@ -45,7 +45,7 @@ public class BookService {
 			return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.CREATED);
 
 		}
-		logger.error("BOOK FAILED TO DAVE");
+		logger.error("BOOK FAILED TO SAVE");
 		throw new NoSuchIdFoundException();
 
 	}
@@ -112,13 +112,13 @@ public class BookService {
 		ResponseEntity<ResponseStructure<String>> entity;
 		ResponseStructure<String> responseStructure = new ResponseStructure();
 		Book b2 = bookDao.getBookbyId(id).get();
-
+		
 		bookDao.updateBookbyId(b2);
 		if (b2 != null) {
 
 			responseStructure.setStatus(HttpStatus.OK.value());
 			responseStructure.setMessage("Deleted");
-			responseStructure.setData(bookDao.deleteBookbyId(id));
+			responseStructure.setData(bookDao.deleteBookbyId(100));
 			logger.info("BOOK DELETED");
 			return entity = new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
 		}

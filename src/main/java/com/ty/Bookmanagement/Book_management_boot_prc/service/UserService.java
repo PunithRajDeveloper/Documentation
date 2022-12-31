@@ -1,5 +1,6 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.log4j.Logger;
@@ -8,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ty.Bookmanagement.Book_management_boot_prc.dao.BookDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.UserDao;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
@@ -22,6 +25,9 @@ public class UserService {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	BookDao bookDao;
 
 	public ResponseEntity<ResponseStructure<User>> saveUser(User user) {
 		ResponseStructure<User> responseStructure = new ResponseStructure<User>();
@@ -86,19 +92,24 @@ public class UserService {
 		logger.error("User not found");
 		throw new UnableToDeleteException();
 	}
-public ResponseEntity<ResponseStructure<User>> getUserbyEmail(String email, String password)
+public ResponseEntity<ResponseStructure<User>> getUserbyEmail(String email, String password, Book book)
 {
 	ResponseEntity<ResponseStructure<User>> entity;
 	ResponseStructure<User> responseStructure=new ResponseStructure<User>();
 	User user=userDao.getEmail(email);
 	if(user!=null)
 	{
+		List<Book> l1=user.getBooks();	
 		if(user.getPassword().equals(password))
 		{
 			responseStructure.setStatus(HttpStatus.FOUND.value());
 			responseStructure.setMessage("Login success");
 			responseStructure.setData(user);
 			logger.info("LOGIN SUCCESS");
+			User u2=userDao.getEmail(email);
+			bookDao.saveBook(book);
+			l1.add(book);
+			userDao.updateUser(u2);
 			return entity=new ResponseEntity<ResponseStructure<User>>(responseStructure,HttpStatus.FOUND);
 		}
 		else

@@ -78,9 +78,9 @@ public class BookController {
 		return service.updateBook(id, book);
 	}
 
-//	@DeleteMapping
-//	public ResponseEntity<ResponseStructure<String>> deleteBook(@RequestParam int id)
-//	{
-//		return service.deleteById(id);
-//	}
+	@DeleteMapping
+	public ResponseEntity<ResponseStructure<String>> deleteBook(@RequestParam int id)
+	{
+		return service.deleteById(id);
+	}
 }
