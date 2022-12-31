@@ -34,12 +34,12 @@ public class CartService {
 		
 		Product product=productDao.getProductById(pid).get();
 		List<Book> book=product.getBooks();
-		product.setId(pid);
-		List<Product> products=cart.getProducts();
-		
-		cart.setProducts(products);
-		product.setId(pid);
-		productDao.updateProduct(product);
+		//product.setId(pid);
+		//List<Product> products=cart.getProducts();
+		List<Product> list=new ArrayList<Product>();
+		list.add(product);
+		//product.setId(pid);
+		//productDao.updateProduct(product);
 		double totalcost=0;
 		for(Book b : book)
 		{
@@ -49,6 +49,7 @@ public class CartService {
 				
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Cart detail saved sucessfully");
+		cart.setProducts(list);
 		responseStructure.setData(dao.saveCart(cart));
 		logger.info("saved cart");
 		return new ResponseEntity<ResponseStructure<Cart>>(responseStructure,
