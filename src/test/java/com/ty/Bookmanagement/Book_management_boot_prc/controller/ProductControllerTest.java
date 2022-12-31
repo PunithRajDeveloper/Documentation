@@ -23,6 +23,7 @@ class ProductControllerTest {
 		product.setBooks(null);
 
 		repo.save(product);
+		assertNotNull(repo.findById(1));
 
 	}
 
@@ -44,6 +45,7 @@ class ProductControllerTest {
 	@Test
 	void testDeleteProductById() {
 		repo.deleteById(5);
+		
 	}
 
 }
