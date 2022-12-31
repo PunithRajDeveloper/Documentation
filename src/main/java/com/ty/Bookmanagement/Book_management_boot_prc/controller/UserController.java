@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
 import com.ty.Bookmanagement.Book_management_boot_prc.service.UserService;
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
@@ -98,8 +99,10 @@ public class UserController {
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@GetMapping 
-	public ResponseEntity<ResponseStructure<User>> getUserByemail(@RequestParam String email, @RequestParam String password) {
-		return userService.getUserbyEmail(email, password);
+	public ResponseEntity<ResponseStructure<User>> getUserByemail(@RequestParam String email, @RequestParam String password, @RequestBody Book book) {
+		return userService.getUserbyEmail(email, password, book);
+		
+		
 		
 	}
 
