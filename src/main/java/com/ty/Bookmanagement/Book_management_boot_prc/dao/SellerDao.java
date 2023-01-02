@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Seller;
-import com.ty.Bookmanagement.Book_management_boot_prc.repo.UserRepo;
+import com.ty.Bookmanagement.Book_management_boot_prc.repo.SellerRepo;
 
 @Repository
-public class UserDao {
+public class SellerDao {
 	@Autowired
-	UserRepo userRepo;
+	SellerRepo userRepo;
 
 	public Seller saveUser(Seller user) {
 		return userRepo.save(user);

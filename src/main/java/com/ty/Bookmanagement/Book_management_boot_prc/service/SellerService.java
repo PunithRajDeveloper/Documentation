@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.BookDao;
-import com.ty.Bookmanagement.Book_management_boot_prc.dao.UserDao;
+import com.ty.Bookmanagement.Book_management_boot_prc.dao.SellerDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Seller;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
@@ -19,12 +19,12 @@ import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateEx
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
-public class UserService {
+public class SellerService {
 
-	private static final Logger logger = Logger.getLogger(UserService.class);
+	private static final Logger logger = Logger.getLogger(SellerService.class);
 
 	@Autowired
-	UserDao userDao;
+	SellerDao userDao;
 
 	@Autowired
 	BookDao bookDao;

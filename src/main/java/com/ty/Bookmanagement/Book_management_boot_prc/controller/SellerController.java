@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Seller;
-import com.ty.Bookmanagement.Book_management_boot_prc.service.UserService;
+import com.ty.Bookmanagement.Book_management_boot_prc.service.SellerService;
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 import io.swagger.annotations.ApiOperation;
@@ -24,9 +24,9 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("user")
-public class UserController {
+public class SellerController {
 	@Autowired
-	UserService userService;
+	SellerService userService;
 
 	@ApiOperation(value = "save user", notes = "its used to save user")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),

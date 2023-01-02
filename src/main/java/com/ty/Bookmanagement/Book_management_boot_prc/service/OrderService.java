@@ -20,7 +20,7 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
 public class OrderService {
-	private static final Logger logger = Logger.getLogger(UserService.class);
+	private static final Logger logger = Logger.getLogger(SellerService.class);
 	@Autowired
 	private OrderDao dao;
 	@Autowired

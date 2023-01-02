@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.BookDao;
-import com.ty.Bookmanagement.Book_management_boot_prc.dao.UserDao;
+import com.ty.Bookmanagement.Book_management_boot_prc.dao.SellerDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Seller;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchCatagoryFoundException;
@@ -27,7 +27,7 @@ public class BookService {
 	private BookDao bookDao;
 
 	@Autowired
-	private UserDao dao;
+	private SellerDao dao;
 
 	public ResponseEntity<ResponseStructure<Book>> saveBook(List<Book> book, String email, String password) {
 		ResponseEntity<ResponseStructure<Book>> entity;
