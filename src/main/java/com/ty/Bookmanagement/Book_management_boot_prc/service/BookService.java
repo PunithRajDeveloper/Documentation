@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.BookDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.UserDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
-import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Seller;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchCatagoryFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
@@ -32,7 +32,7 @@ public class BookService {
 	public ResponseEntity<ResponseStructure<Book>> saveBook(List<Book> book, String email, String password) {
 		ResponseEntity<ResponseStructure<Book>> entity;
 		ResponseStructure<Book> responseStructure = new ResponseStructure();
-		User u1 = dao.getByEmail(email);
+		Seller u1 = dao.getByEmail(email);
 		if (u1 != null && u1.getPassword().equals(password)) {
 
 			List<Book> list = new ArrayList<Book>(book);
@@ -116,7 +116,7 @@ public class BookService {
 
 		ResponseEntity<ResponseStructure<String>> entity;
 		ResponseStructure<String> responseStructure = new ResponseStructure();
-		User u1 = dao.getByEmail(email);
+		Seller u1 = dao.getByEmail(email);
 		if (u1 != null && u1.getPassword().equals(password)) {
 			List<Book> b1 = u1.getBooks();
 			for (int i = 0; i < b1.size(); i++) {
