@@ -43,7 +43,7 @@ public class UserController {
 		return userService.saveUser(user);
 
 	}
-	
+
 	@ApiOperation(value = "update user", notes = "its user to update user")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
 			@ApiResponse(code = 202, message = "accepted"),
@@ -55,10 +55,10 @@ public class UserController {
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@PutMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<User>> updateUser(@RequestBody User user,@RequestParam int id) {
+	public ResponseEntity<ResponseStructure<User>> updateUser(@RequestBody User user, @RequestParam int id) {
 		return userService.updateUsetById(user, id);
 	}
-	
+
 	@ApiOperation(value = "used to get user", notes = "its used to get used get user data by id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
 			@ApiResponse(code = 202, message = "accepted"),
@@ -71,9 +71,9 @@ public class UserController {
 	@GetMapping("/{id}")
 	public ResponseEntity<ResponseStructure<User>> getUserById(@PathVariable int id) {
 		return userService.getUserById(id);
-		
+
 	}
-	
+
 	@ApiOperation(value = "user to delete user", notes = "its used delete the user")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
 			@ApiResponse(code = 202, message = "accepted"),
@@ -86,9 +86,9 @@ public class UserController {
 	@DeleteMapping
 	public ResponseEntity<ResponseStructure<String>> deleteUser(@RequestParam int id) {
 		return userService.deleteById(id);
-		
+
 	}
-	
+
 	@ApiOperation(value = "used to login user", notes = "its used to get login user by validating")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
 			@ApiResponse(code = 202, message = "accepted"),
@@ -98,12 +98,11 @@ public class UserController {
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
-	@GetMapping 
-	public ResponseEntity<ResponseStructure<User>> getUserByemail(@RequestParam String email, @RequestParam String password, @RequestBody Book book) {
-		return userService.getUserbyEmail(email, password, book);
-		
-		
-		
+	@GetMapping
+	public ResponseEntity<ResponseStructure<User>> getUserByemail(@RequestParam String email,
+			@RequestParam String password) {
+		return userService.getUserbyEmail(email, password);
+
 	}
 
 }

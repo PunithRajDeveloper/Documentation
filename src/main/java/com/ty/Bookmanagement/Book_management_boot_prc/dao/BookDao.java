@@ -1,5 +1,6 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,14 @@ public class BookDao {
 
 	public Book updateBookbyId(Book book) {
 		return repositery.save(book);
+	}
+	
+	public List<Book> findall()
+	{
+		return repositery.findAll();
+	}
+	public void deleteEntity(Book book)
+	{
+		 repositery.delete(book);
 	}
 }
