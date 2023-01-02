@@ -1,5 +1,7 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class BookController {
 
 	@Autowired
 	private BookService service;
-	
+
 	@ApiOperation(value = "save book", notes = "its used to save book")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
 			@ApiResponse(code = 202, message = "accepted"),
@@ -39,8 +41,9 @@ public class BookController {
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<Book>> saveBook(@RequestBody Book book, @RequestParam int id) {
-		return service.saveBook(book, id);
+	public ResponseEntity<ResponseStructure<Book>> saveBook(@RequestBody List<Book> book, @RequestParam String email,
+			@RequestParam String password) {
+		return service.saveBook(book, email, password);
 	}
 
 	@ApiOperation(value = "used to get book", notes = "its used to get book data by id")
@@ -52,8 +55,7 @@ public class BookController {
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
-	@GetMapping( produces = {
-			MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ResponseStructure<Book>> getBook(@RequestParam int id) {
 		return service.getBookById(id);
 	}
@@ -79,8 +81,8 @@ public class BookController {
 	}
 
 	@DeleteMapping
-	public ResponseEntity<ResponseStructure<String>> deleteBook(@RequestParam int id)
-	{
-		return service.deleteById(id);
+	public ResponseEntity<ResponseStructure<String>> deleteBook(@RequestParam int id, @RequestParam String email,
+			@RequestParam String password) {
+		return service.deleteById(id, email, password);
 	}
 }

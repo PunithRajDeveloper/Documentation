@@ -31,7 +31,7 @@ public class UserDao {
 
 	}
 	
-	public User getEmail(String email)
+	public User getByEmail(String email)
 	{
 		return userRepo.getByEmail(email);
 	}

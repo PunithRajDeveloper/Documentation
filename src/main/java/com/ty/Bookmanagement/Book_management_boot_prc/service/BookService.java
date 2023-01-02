@@ -1,5 +1,6 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,27 +21,31 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
 public class BookService {
-	private static final Logger logger=Logger.getLogger(BookService.class);
-	
+	private static final Logger logger = Logger.getLogger(BookService.class);
+
 	@Autowired
 	private BookDao bookDao;
 
 	@Autowired
 	private UserDao dao;
 
-	public ResponseEntity<ResponseStructure<Book>> saveBook(Book book, int id) {
+	public ResponseEntity<ResponseStructure<Book>> saveBook(List<Book> book, String email, String password) {
 		ResponseEntity<ResponseStructure<Book>> entity;
 		ResponseStructure<Book> responseStructure = new ResponseStructure();
-		User u1 = dao.getUsreById(id).get();
-		List<Book> list = u1.getBooks();
-		if (u1 != null) {
+		User u1 = dao.getByEmail(email);
+		if (u1 != null && u1.getPassword().equals(password)) {
 
+			List<Book> list = new ArrayList<Book>(book);
+			List<Book> l2 = u1.getBooks();
 			responseStructure.setStatus(HttpStatus.CREATED.value());
 			responseStructure.setMessage("Saved");
-			Book b1 = book;
-			list.add(b1);
-			u1.setBooks(list);
-			responseStructure.setData(bookDao.saveBook(book));
+			for(Book b : list )
+			{
+				l2.add(b);
+				responseStructure.setData(bookDao.saveBook(b));	
+			}
+			u1.setBooks(l2);
+			dao.updateUser(u1);
 			logger.info("BOOK SAVED");
 			return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.CREATED);
 
@@ -61,7 +66,7 @@ public class BookService {
 			logger.info("BOOK FOUND");
 			return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.OK);
 		}
-         logger.error("BOOK ID NOT FOUND");
+		logger.error("BOOK ID NOT FOUND");
 		throw new NoSuchIdFoundException();
 	}
 
@@ -107,23 +112,28 @@ public class BookService {
 		throw new UnableToUpdateException();
 	}
 
-	public ResponseEntity<ResponseStructure<String>> deleteById(int id) {
+	public ResponseEntity<ResponseStructure<String>> deleteById(int id, String email, String password) {
 
 		ResponseEntity<ResponseStructure<String>> entity;
 		ResponseStructure<String> responseStructure = new ResponseStructure();
-		Book b2 = bookDao.getBookbyId(id).get();
-		
-		bookDao.updateBookbyId(b2);
-		if (b2 != null) {
+		User u1 = dao.getByEmail(email);
+		if (u1 != null && u1.getPassword().equals(password)) {
+			List<Book> b1 = u1.getBooks();
+			for (int i = 0; i < b1.size(); i++) {
+				if (b1.get(i).getId() == id) {
+					b1.remove(i);
+					responseStructure.setStatus(HttpStatus.OK.value());
+					responseStructure.setMessage("Deleted");
+					responseStructure.setData(bookDao.deleteBookbyId(id));
+					logger.info("BOOK DELETED");
+					return entity = new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
+				}
 
-			responseStructure.setStatus(HttpStatus.OK.value());
-			responseStructure.setMessage("Deleted");
-			responseStructure.setData(bookDao.deleteBookbyId(100));
-			logger.info("BOOK DELETED");
-			return entity = new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.OK);
+			}
 		}
-		logger.error("BOOK FAILED TO DELETE");
-		throw new NoSuchIdFoundException();
+
+		logger.error("Invalid Credentials");
+		throw new NoSuchIdFoundException("Invalid Credetials");
 	}
 
 }

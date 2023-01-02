@@ -20,21 +20,20 @@ import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @Service
 public class UserService {
-	
-	private static final Logger logger=Logger.getLogger(UserService.class);
-	
+
+	private static final Logger logger = Logger.getLogger(UserService.class);
+
 	@Autowired
 	UserDao userDao;
-	
+
 	@Autowired
 	BookDao bookDao;
 
 	public ResponseEntity<ResponseStructure<User>> saveUser(User user) {
 		ResponseStructure<User> responseStructure = new ResponseStructure<User>();
 
-		User u1=userDao.getEmail(user.getEmail());
-		if(u1==null)
-		{
+		User u1 = userDao.getByEmail(user.getEmail());
+		if (u1 == null) {
 			responseStructure.setStatus(HttpStatus.CREATED.value());
 			responseStructure.setMessage("SAVED");
 			responseStructure.setData(userDao.saveUser(user));
@@ -43,7 +42,7 @@ public class UserService {
 		}
 		logger.warn("Email already Found");
 		responseStructure.setData(u1);
-		throw new NoSuchIdFoundException("Email is already Present");		
+		throw new NoSuchIdFoundException("Email is already Present");
 	}
 
 	public ResponseEntity<ResponseStructure<User>> updateUsetById(User user, int id) {
@@ -92,35 +91,28 @@ public class UserService {
 		logger.error("User not found");
 		throw new UnableToDeleteException();
 	}
-public ResponseEntity<ResponseStructure<User>> getUserbyEmail(String email, String password, Book book)
-{
-	ResponseEntity<ResponseStructure<User>> entity;
-	ResponseStructure<User> responseStructure=new ResponseStructure<User>();
-	User user=userDao.getEmail(email);
-	if(user!=null)
-	{
-		List<Book> l1=user.getBooks();	
-		if(user.getPassword().equals(password))
-		{
-			responseStructure.setStatus(HttpStatus.FOUND.value());
-			responseStructure.setMessage("Login success");
-			responseStructure.setData(user);
-			logger.info("LOGIN SUCCESS");
-			User u2=userDao.getEmail(email);
-			bookDao.saveBook(book);
-			l1.add(book);
-			userDao.updateUser(u2);
-			return entity=new ResponseEntity<ResponseStructure<User>>(responseStructure,HttpStatus.FOUND);
+
+	public ResponseEntity<ResponseStructure<User>> getUserbyEmail(String email, String password) {
+		ResponseEntity<ResponseStructure<User>> entity;
+		ResponseStructure<User> responseStructure = new ResponseStructure<User>();
+		User user = userDao.getByEmail(email);
+		List<Book> l1 = user.getBooks();
+		if (user != null) {
+			
+			if (user.getPassword().equals(password)) {
+				responseStructure.setStatus(HttpStatus.FOUND.value());
+				responseStructure.setMessage("Login success");
+				responseStructure.setData(user);
+				logger.info("LOGIN SUCCESS");
+				return entity = new ResponseEntity<ResponseStructure<User>>(responseStructure, HttpStatus.FOUND);
+			} else {
+				logger.warn("INVALID PASSWORD");
+				throw new NoSuchIdFoundException("Invalid Password");
+			}
+
 		}
-		else
-		{
-			logger.warn("INVALID PASSWORD");
-			throw new NoSuchIdFoundException("Invalid Password");
-		}
-		
+		logger.error("INVALID CREDENTIALS");
+		throw new NoSuchIdFoundException("Provide Valid Credentials");
+
 	}
-	logger.error("INVALID CREDENTIALS");
-	throw new NoSuchIdFoundException("Provide Valid Credentials");
-	
-}
 }
