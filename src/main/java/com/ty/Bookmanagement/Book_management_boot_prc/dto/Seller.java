@@ -20,7 +20,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class User {
+public class Seller {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -36,7 +36,7 @@ public class User {
 	private String email;
 	private String gender;
 
-	@OneToMany(cascade = CascadeType.REMOVE)
+	@OneToMany
 	private List<Book> books;
 
 }

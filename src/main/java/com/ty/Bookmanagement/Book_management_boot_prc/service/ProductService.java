@@ -15,7 +15,7 @@ import com.ty.Bookmanagement.Book_management_boot_prc.dao.ProductDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Book;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Product;
-import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Seller;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;

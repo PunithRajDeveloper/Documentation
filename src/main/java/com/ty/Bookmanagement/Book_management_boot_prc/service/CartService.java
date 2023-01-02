@@ -34,12 +34,8 @@ public class CartService {
 		
 		Product product=productDao.getProductById(pid).get();
 		List<Book> book=product.getBooks();
-		//product.setId(pid);
-		//List<Product> products=cart.getProducts();
 		List<Product> list=new ArrayList<Product>();
 		list.add(product);
-		//product.setId(pid);
-		//productDao.updateProduct(product);
 		double totalcost=0;
 		for(Book b : book)
 		{
