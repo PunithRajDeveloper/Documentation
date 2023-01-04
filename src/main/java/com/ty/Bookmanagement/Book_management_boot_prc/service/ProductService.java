@@ -99,4 +99,6 @@ public class ProductService {
 		logger.error("unable to delete");
 		throw new UnableToDeleteException();
 	}
+	
+	
 }

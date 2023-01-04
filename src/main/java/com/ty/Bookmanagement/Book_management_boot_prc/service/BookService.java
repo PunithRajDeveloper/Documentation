@@ -135,5 +135,28 @@ public class BookService {
 		logger.error("Invalid Credentials");
 		throw new NoSuchIdFoundException("Invalid Credetials");
 	}
+	public ResponseEntity<ResponseStructure<List<Book>>> getListOfBook(String catagary,int lowcost,int highcost) {
+		List<Book> books=bookDao.findall();
+		List<Book> sortedBookList= new ArrayList<Book>();
+		for(Book book:books) {
+			if(book.getCategory().equalsIgnoreCase(catagary)) {
+				if(book.getPrice()>=lowcost && book.getPrice()<=highcost) {
+					sortedBookList.add(book);
+				}
+			}
+		}
+		
+		ResponseStructure<List<Book>> responseStructure=new ResponseStructure<List<Book>>();
+		if(sortedBookList !=null) {
+			responseStructure.setStatus(HttpStatus.OK.value());
+			responseStructure.setMessage("CHOOSE FROM BELOW LIST");
+			logger.info("DISPLAYED LIST");
+			responseStructure.setData(sortedBookList);
+			return new ResponseEntity<ResponseStructure<List<Book>>>(
+					responseStructure, HttpStatus.OK);
+		}
+		logger.error("NO SUCH CATAGARY FOUND");
+		throw new NoSuchCatagoryFoundException();
+	}
 
 }

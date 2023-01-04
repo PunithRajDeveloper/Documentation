@@ -3,8 +3,6 @@ package com.ty.Bookmanagement.Book_management_boot_prc.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.Scanner;
-
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Seller;
 import com.ty.Bookmanagement.Book_management_boot_prc.repo.SellerRepo;
-
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -26,7 +23,9 @@ class UserControllerTest {
 	@Test
 	@Order(1)
 	void testSaveUser() {
+
 		Seller u = new Seller();
+
 		u.setId(1);
 		u.setAddress("Banglore");
 		u.setBooks(null);
@@ -42,6 +41,7 @@ class UserControllerTest {
 	@Test
 	@Order(2)
 	void testUpdateUser() {
+
 		Seller u = repo.findById(1).get();
 
 		u.setAddress("Haveri");

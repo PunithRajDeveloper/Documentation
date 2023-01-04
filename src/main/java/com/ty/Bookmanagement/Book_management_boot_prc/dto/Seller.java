@@ -44,7 +44,7 @@ public class Seller {
 	@NotBlank(message = "Enter a valid gender")
 	private String gender;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Book> books;
 
 }

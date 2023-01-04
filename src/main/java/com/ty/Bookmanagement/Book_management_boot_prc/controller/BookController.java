@@ -86,4 +86,9 @@ public class BookController {
 		return service.deleteById(id, email, password);
 	}
 	
+	@GetMapping
+	public ResponseEntity<ResponseStructure<List<Book>>> bookList(@RequestParam String catagary,@RequestParam int lowcost,@RequestParam int highcost) {
+		return service.getListOfBook(catagary, lowcost, highcost);
+	}
+
 }
