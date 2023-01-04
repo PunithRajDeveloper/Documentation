@@ -95,7 +95,9 @@ public class SellerService {
 	public ResponseEntity<ResponseStructure<Seller>> getUserbyEmail(String email, String password) {
 		ResponseEntity<ResponseStructure<Seller>> entity;
 		ResponseStructure<Seller> responseStructure = new ResponseStructure<Seller>();
+		
 		Seller user = userDao.getByEmail(email);
+	
 		List<Book> l1 = user.getBooks();
 		if (user != null) {
 			
