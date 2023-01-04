@@ -6,7 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +22,13 @@ public class Orders {
 	private int id;
 
 	@NotNull(message = "Enter a valid name")
+	@Size(min = 3, message = "Enter your full name")
 	private String name;
 	@NotNull(message = "Enter a valid addres to send orders")
+	@Size(min = 10, message = "enter full address")
 	private String address;
 	@NotNull(message = "Enter an active phone number to contact")
+	@Min(9)
 	private long phone;
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Cart cart;

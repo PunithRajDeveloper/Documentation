@@ -2,6 +2,7 @@ package com.ty.Bookmanagement.Book_management_boot_prc.dto;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Convert;
 
 import javax.persistence.Entity;
