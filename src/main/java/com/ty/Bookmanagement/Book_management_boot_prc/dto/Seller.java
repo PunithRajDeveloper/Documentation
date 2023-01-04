@@ -36,7 +36,7 @@ public class Seller {
 	private String email;
 	private String gender;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Book> books;
 
 }
