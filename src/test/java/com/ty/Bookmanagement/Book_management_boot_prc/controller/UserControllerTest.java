@@ -1,25 +1,22 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ty.Bookmanagement.Book_management_boot_prc.dto.User;
-import com.ty.Bookmanagement.Book_management_boot_prc.repo.UserRepo;
+import com.ty.Bookmanagement.Book_management_boot_prc.dto.Seller;
+import com.ty.Bookmanagement.Book_management_boot_prc.repo.SellerRepo;
 
 @SpringBootTest
 class UserControllerTest {
 
 	@Autowired
-	UserRepo repo;
+	SellerRepo repo;
 	@Test
 	void testSaveUser() {
-		User u=new User();
+		Seller u=new Seller();
 		u.setId(1);
 		u.setAddress("Banglore");
 		u.setBooks(null);
@@ -34,7 +31,7 @@ class UserControllerTest {
 
 	@Test
 	void testUpdateUser() {
-		User u=repo.findById(1).get();
+		Seller u=repo.findById(1).get();
 		
 		u.setAddress("hydrabad");
 		u.setBooks(null);
