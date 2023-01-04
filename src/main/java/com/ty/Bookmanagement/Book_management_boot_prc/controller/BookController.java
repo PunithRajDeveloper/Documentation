@@ -38,7 +38,7 @@ public class BookController {
 			@ApiResponse(code = 402, message = "payment requried"), @ApiResponse(code = 403, message = "forbidden"),
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
-			@ApiResponse(code = 500, message = "imternal server error"), })
+			@ApiResponse(code = 500, message = "internal server error"), })
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ResponseStructure<Book>> saveBook(@RequestBody List<Book> book, @RequestParam String email,
@@ -54,7 +54,7 @@ public class BookController {
 			@ApiResponse(code = 402, message = "payment requried"), @ApiResponse(code = 403, message = "forbidden"),
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
-			@ApiResponse(code = 500, message = "imternal server error"), })
+			@ApiResponse(code = 500, message = "internal server error"), })
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ResponseStructure<Book>> getBook(@RequestParam int id) {
 		return service.getBookById(id);
@@ -73,7 +73,7 @@ public class BookController {
 			@ApiResponse(code = 402, message = "payment requried"), @ApiResponse(code = 403, message = "forbidden"),
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
-			@ApiResponse(code = 500, message = "imternal server error"), })
+			@ApiResponse(code = 500, message = "internal server error"), })
 	@PutMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ResponseStructure<Book>> updateBook(@RequestBody Book book, @RequestParam int id) {
@@ -85,4 +85,5 @@ public class BookController {
 			@RequestParam String password) {
 		return service.deleteById(id, email, password);
 	}
+	
 }
