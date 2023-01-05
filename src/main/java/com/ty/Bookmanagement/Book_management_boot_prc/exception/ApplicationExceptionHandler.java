@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.TypeMismatchException;
-import org.springframework.dao.IncorrectResultSizeDataAccessException;
+
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +14,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpServerErrorException.InternalServerError;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import com.ty.Bookmanagement.Book_management_boot_prc.util.ResponseStructure;
 
 @RestControllerAdvice
@@ -90,6 +87,14 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 
 		return new ResponseEntity<>(responseStructure, HttpStatus.BAD_REQUEST);
 	}
-
-
+@ExceptionHandler(ConstraintViolationException.class)
+public ResponseEntity<ResponseStructure<String>> ConstraintViolationExceptionHandler(ConstraintViolationException exception)
+{
+	ResponseStructure<String> responseStructure=new ResponseStructure<String>();
+	ResponseEntity<ResponseStructure<String>> entity = new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.BAD_REQUEST);
+	responseStructure.setStatus(HttpStatus.BAD_REQUEST.value());
+	responseStructure.setMessage("Invalid Constraint");
+	responseStructure.setData("Constaraint violation");
+	return entity;
+}
 }
