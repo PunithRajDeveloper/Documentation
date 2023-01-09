@@ -30,8 +30,7 @@ public class Orders {
 	@NotNull(message = "Enter an active phone number to contact")
 	@Min(9)
 	private long phone;
-<<<<<<< punith
-=======
+
 	@Convert(converter = AesEncryption.class)
 	@NotNull
 	@Email(message = "Enter valid mail")
@@ -40,7 +39,7 @@ public class Orders {
 	@Convert(converter = AesEncryption.class)
 	@Size(message = "minimum 6 charecters", min = 6)
 	private String password;
->>>>>>> local
+
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Cart cart;
 	private String date;
