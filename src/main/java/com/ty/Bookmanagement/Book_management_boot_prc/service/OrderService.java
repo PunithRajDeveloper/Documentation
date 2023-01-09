@@ -27,9 +27,8 @@ public class OrderService {
 	@Autowired
 	private CartDao cartDao;
 
-	public ResponseEntity<ResponseStructure<Orders>> saveOrder(Orders orders, int id) {
-		Cart cart = cartDao.getCartById(id).get();
-		orders.setCart(cart);
+	public ResponseEntity<ResponseStructure<Orders>> saveOrder(Orders orders) {
+		
 		LocalDateTime dateTime = LocalDateTime.now();
 		String date = String.valueOf(dateTime);
 		orders.setDate(date);
@@ -113,7 +112,7 @@ public class OrderService {
 			logger.info("order placed by buyer");
 			return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.CREATED);
 		}
-		logger.error(orders);
+		logger.error("FAILED TO PLACE ORDER");
 		throw new InvalidCredentialsException();
 	}
 
