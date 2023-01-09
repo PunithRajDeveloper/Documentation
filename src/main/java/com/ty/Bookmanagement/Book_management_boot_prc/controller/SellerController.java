@@ -1,5 +1,7 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +41,7 @@ public class SellerController {
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<Seller>> saveUser(@RequestBody Seller user) {
+	public ResponseEntity<ResponseStructure<Seller>> saveUser(@Valid @RequestBody Seller user) {
 		return userService.saveUser(user);
 
 	}
@@ -55,7 +57,7 @@ public class SellerController {
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@PutMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<Seller>> updateUser(@RequestBody Seller user, @RequestParam int id) {
+	public ResponseEntity<ResponseStructure<Seller>> updateUser(@Valid @RequestBody Seller user,@Valid  @RequestParam int id) {
 		return userService.updateUsetById(user, id);
 	}
 
@@ -69,7 +71,7 @@ public class SellerController {
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@GetMapping("/{id}")
-	public ResponseEntity<ResponseStructure<Seller>> getUserById(@PathVariable int id) {
+	public ResponseEntity<ResponseStructure<Seller>> getUserById(@Valid @PathVariable int id) {
 		return userService.getUserById(id);
 
 	}
@@ -84,7 +86,7 @@ public class SellerController {
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@DeleteMapping
-	public ResponseEntity<ResponseStructure<String>> deleteUser(@RequestParam int id) {
+	public ResponseEntity<ResponseStructure<String>> deleteUser(@Valid @RequestParam int id) {
 		return userService.deleteById(id);
 
 	}
@@ -99,8 +101,8 @@ public class SellerController {
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@GetMapping
-	public ResponseEntity<ResponseStructure<Seller>> getUserByemail(@RequestParam String email,
-			@RequestParam String password) {
+	public ResponseEntity<ResponseStructure<Seller>> getUserByemail(@Valid @RequestParam String email,
+			@Valid @RequestParam String password) {
 		return userService.getUserbyEmail(email, password);
 
 	}
