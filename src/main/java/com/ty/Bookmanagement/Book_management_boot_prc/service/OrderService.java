@@ -13,6 +13,7 @@ import com.ty.Bookmanagement.Book_management_boot_prc.dao.CartDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dao.OrderDao;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Cart;
 import com.ty.Bookmanagement.Book_management_boot_prc.dto.Orders;
+import com.ty.Bookmanagement.Book_management_boot_prc.exception.InvalidCredentialsException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.NoSuchIdFoundException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToDeleteException;
 import com.ty.Bookmanagement.Book_management_boot_prc.exception.UnableToUpdateException;
@@ -47,7 +48,7 @@ public class OrderService {
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		if (orders1.isPresent()) {
 			LocalDateTime dateTime = LocalDateTime.now();
-            orders.setDate(String.valueOf(dateTime));
+			orders.setDate(String.valueOf(dateTime));
 			Orders o1 = orders1.get();
 			orders.setId(id);
 			orders.setCart(o1.getCart());
@@ -95,6 +96,25 @@ public class OrderService {
 		logger.error("Order not found");
 		throw new UnableToDeleteException("UnableToDelete");
 
+	}
+
+	public ResponseEntity<ResponseStructure<Orders>> setOrdersByBuyer(String email, String password, int id) {
+		Orders orders = dao.getByEmail(email);
+		if (orders.getEmail().equalsIgnoreCase(email) && orders.getPassword().equalsIgnoreCase(password)) {
+			Cart cart = cartDao.getCartById(id).get();
+			orders.setCart(cart);
+			LocalDateTime dateTime = LocalDateTime.now();
+			String date = String.valueOf(dateTime);
+			orders.setDate(date);
+			ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
+			responseStructure.setStatus(HttpStatus.CREATED.value());
+			responseStructure.setMessage("login successfull");
+			responseStructure.setData(dao.saveOrder(orders));
+			logger.info("order placed by buyer");
+			return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.CREATED);
+		}
+		logger.error(orders);
+		throw new InvalidCredentialsException();
 	}
 
 }

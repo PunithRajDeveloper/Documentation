@@ -6,5 +6,7 @@ import com.ty.Bookmanagement.Book_management_boot_prc.dto.Orders;
 
 public interface OrderRepo extends JpaRepository<Orders, Integer> 
 {
+public Orders getOrders(String email);
 
+public Orders getByEmail(String email);
 }
