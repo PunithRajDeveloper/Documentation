@@ -25,6 +25,17 @@ public class Orders {
 	private String address;
 	@NotNull(message = "Enter an active phone number to contact")
 	private long phone;
+<<<<<<< punith
+=======
+	@Convert(converter = AesEncryption.class)
+	@NotNull
+	@Email(message = "Enter valid mail")
+	private String email;
+	@NotNull(message = "Enter an active phone number to contact")
+	@Convert(converter = AesEncryption.class)
+	@Size(message = "minimum 6 charecters", min = 6)
+	private String password;
+>>>>>>> local
 	@OneToOne(cascade = CascadeType.REMOVE)
 	private Cart cart;
 	private String date;

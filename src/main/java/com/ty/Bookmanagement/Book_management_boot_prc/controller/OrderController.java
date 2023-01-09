@@ -85,4 +85,22 @@ public class OrderController {
 	{
 		return service.deleteOrderById(id);
 	}
+<<<<<<< punith
+=======
+	
+	@ApiOperation(value = "save order", notes = "its used to save order")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
+			@ApiResponse(code = 202, message = "accepted"),
+			@ApiResponse(code = 203, message = "non-authoritataive information"),
+			@ApiResponse(code = 400, message = "bad request"), @ApiResponse(code = 401, message = "unathorized"),
+			@ApiResponse(code = 402, message = "payment requried"), @ApiResponse(code = 403, message = "forbidden"),
+			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
+			@ApiResponse(code = 408, message = "request timeout"),
+			@ApiResponse(code = 500, message = "imternal server error"), })
+	@PatchMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<ResponseStructure<Orders>> setOrders(@RequestParam String email,@RequestParam String password,@RequestParam int id) {
+		return service.setOrderByBuyer(email, password, id);
+	}
+>>>>>>> local
 }

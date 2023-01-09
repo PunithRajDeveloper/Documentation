@@ -26,6 +26,18 @@ public  class OrderDao {
 	{
 		return repo.findById(id);
 	}
+<<<<<<< punith
+=======
+	public List<Orders> getOrders() {
+		return repo.findAll();
+		
+	} 
+	
+	public Orders getByEmail(String email) {
+		return repo.getByEmail(email);
+	}
+	
+>>>>>>> local
 	public String deleteOrders(int id)
 	{
 		repo.deleteById(id);

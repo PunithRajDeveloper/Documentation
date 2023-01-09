@@ -1,9 +1,14 @@
 package com.ty.Bookmanagement.Book_management_boot_prc.exception;
 
+import java.lang.reflect.InaccessibleObjectException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< punith
+=======
+import javax.validation.ConstraintViolationException;
+>>>>>>> local
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +71,22 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		return responseEntity;
 
 	}
+<<<<<<< punith
+=======
+
+	@ExceptionHandler(InvalidCredentialsException.class)
+	public ResponseEntity<ResponseStructure<String>> invalidCredentialsExceptios(
+			InaccessibleObjectException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		ResponseEntity<ResponseStructure<String>> responseEntity = new ResponseEntity<ResponseStructure<String>>(
+				responseStructure, HttpStatus.NOT_FOUND);
+		responseStructure.setStatus(HttpStatus.NOT_FOUND.value());
+		responseStructure.setMessage("Invalid Credentials Please enter valid credentials");
+		responseStructure.setData(exception.getMessage());
+		return responseEntity;
+	}
+
+>>>>>>> local
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -91,9 +112,24 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 		
 		return new ResponseEntity<>(responseStructure,HttpStatus.BAD_REQUEST);
 	}
+<<<<<<< punith
 	
 	
 	
+=======
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<ResponseStructure<String>> ConstraintViolationExceptionHandler(
+			ConstraintViolationException exception) {
+		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
+		ResponseEntity<ResponseStructure<String>> entity = new ResponseEntity<ResponseStructure<String>>(
+				responseStructure, HttpStatus.BAD_REQUEST);
+		responseStructure.setStatus(HttpStatus.BAD_REQUEST.value());
+		responseStructure.setMessage("Invalid Constraint");
+		responseStructure.setData("Constaraint violation");
+		return entity;
+	}
+>>>>>>> local
 }
 
 
