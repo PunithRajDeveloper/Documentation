@@ -70,7 +70,7 @@ public class SellerController {
 			@ApiResponse(code = 404, message = "not found"), @ApiResponse(code = 405, message = "method not allowed"),
 			@ApiResponse(code = 408, message = "request timeout"),
 			@ApiResponse(code = 500, message = "imternal server error"), })
-	@GetMapping("/{id}")
+	@GetMapping( "/{id}")
 	public ResponseEntity<ResponseStructure<Seller>> getUserById(@Valid @PathVariable int id) {
 		return userService.getUserById(id);
 

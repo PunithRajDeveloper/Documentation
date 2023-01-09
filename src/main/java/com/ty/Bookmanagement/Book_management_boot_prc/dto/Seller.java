@@ -44,7 +44,7 @@ public class Seller {
 	private String email;
 	@NotBlank(message = "Enter a valid gender")
 	private String gender;
-
+	private String role;
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Book> books;
 
