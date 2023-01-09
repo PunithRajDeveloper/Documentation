@@ -108,17 +108,6 @@ public class ApplicationExceptionHandler extends ResponseEntityExceptionHandler 
 	}
 
 
-	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<ResponseStructure<String>> ConstraintViolationExceptionHandler(
-			ConstraintViolationException exception) {
-		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
-		ResponseEntity<ResponseStructure<String>> entity = new ResponseEntity<ResponseStructure<String>>(
-				responseStructure, HttpStatus.BAD_REQUEST);
-		responseStructure.setStatus(HttpStatus.BAD_REQUEST.value());
-		responseStructure.setMessage("Invalid Constraint");
-		responseStructure.setData("Constaraint violation");
-		return entity;
-	}
 
 @ExceptionHandler(ConstraintViolationException.class)
 public ResponseEntity<ResponseStructure<String>> ConstraintViolationExceptionHandler(ConstraintViolationException exception)
