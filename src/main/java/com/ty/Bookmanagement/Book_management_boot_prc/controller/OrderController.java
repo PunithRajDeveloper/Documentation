@@ -38,8 +38,8 @@ public class OrderController {
 			@ApiResponse(code = 500, message = "imternal server error"), })
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
 			MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<ResponseStructure<Orders>> saveBook(@RequestBody Orders order, @RequestParam int id) {
-		return service.saveOrder(order, id);
+	public ResponseEntity<ResponseStructure<Orders>> saveBook(@RequestBody Orders order) {
+		return service.saveOrder(order);
 	}
 	
 	@ApiOperation(value = "used to get order", notes = "its used to get order data by id")
