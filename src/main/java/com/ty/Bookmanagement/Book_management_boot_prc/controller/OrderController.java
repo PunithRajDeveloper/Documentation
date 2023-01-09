@@ -85,8 +85,7 @@ public class OrderController {
 	{
 		return service.deleteOrderById(id);
 	}
-<<<<<<< punith
-=======
+
 	
 	@ApiOperation(value = "save order", notes = "its used to save order")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "ok"), @ApiResponse(code = 201, message = "created"),
@@ -102,5 +101,5 @@ public class OrderController {
 	public ResponseEntity<ResponseStructure<Orders>> setOrders(@RequestParam String email,@RequestParam String password,@RequestParam int id) {
 		return service.setOrderByBuyer(email, password, id);
 	}
->>>>>>> local
+
 }
