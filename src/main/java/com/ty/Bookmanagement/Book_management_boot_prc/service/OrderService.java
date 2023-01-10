@@ -35,7 +35,6 @@ public class OrderService {
 		ResponseStructure<Orders> responseStructure = new ResponseStructure<Orders>();
 		responseStructure.setStatus(HttpStatus.CREATED.value());
 		responseStructure.setMessage("Data Saved");
-		cartDao.saveCart(orders.getCart());
 		responseStructure.setData(dao.saveOrder(orders));
 		logger.info("SAVED ORDER TO ORDER  TABLE");
 		return new ResponseEntity<ResponseStructure<Orders>>(responseStructure, HttpStatus.CREATED);
