@@ -85,14 +85,23 @@ public class BookService {
 		throw new NoSuchCatagoryFoundException();
 	}
 
-	public ResponseEntity<ResponseStructure<Book>> getBookByTitle(String title) {
-		ResponseEntity<ResponseStructure<Book>> entity;
-		ResponseStructure<Book> responseStructure = new ResponseStructure();
+	public ResponseEntity<ResponseStructure<List<Book>>> getBookByTitle(String title) {
+		ResponseEntity<ResponseStructure<List<Book>>> entity;
+		ResponseStructure<List<Book>> responseStructure = new ResponseStructure();
+		List<Book> book1= new ArrayList<Book>();
+		List<Book> book2=bookDao.findall();
+		for(int i=0;i<book2.size();i++)
+		{
+			if(book2.get(i).getTitle().equalsIgnoreCase(title))
+			{
+				book1.add(book2.get(i));	
+			}
+		}
 		responseStructure.setStatus(HttpStatus.OK.value());
 		responseStructure.setMessage("Found");
-		responseStructure.setData(bookDao.getBookByTitle(title));
+		responseStructure.setData(book1);
 		logger.info("BOOK TITLE FOUND");
-		return entity = new ResponseEntity<ResponseStructure<Book>>(responseStructure, HttpStatus.OK);
+		return entity = new ResponseEntity<ResponseStructure<List<Book>>>(responseStructure, HttpStatus.OK);
 	}
 
 	public ResponseEntity<ResponseStructure<Book>> updateBook(int id, Book book) {
