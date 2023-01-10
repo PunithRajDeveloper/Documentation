@@ -64,7 +64,7 @@ public class BookController {
 	}
 
 	@GetMapping("/{title}")
-	public ResponseEntity<ResponseStructure<Book>> getTitle(@Valid @PathVariable String title) {
+	public ResponseEntity<ResponseStructure<List<Book>>> getTitle(@Valid @PathVariable String title) {
 		return service.getBookByTitle(title);
 	}
 
