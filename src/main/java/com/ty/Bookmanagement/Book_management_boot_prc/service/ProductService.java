@@ -31,13 +31,13 @@ public class ProductService {
 
 	private static final Logger logger = Logger.getLogger(ProductService.class);
 
-	public ResponseEntity<ResponseStructure<Product>> saveProduct(Product product, String title) {
+	public ResponseEntity<ResponseStructure<Product>> saveProduct(Product product, int id) {
 		ResponseStructure<Product> responseStructure = new ResponseStructure<Product>();
-		Book book = bookDao.getBookByTitle(title);
+		Book book = bookDao.getBookbyId(id).get();
 		List<Book> books=new ArrayList<Book>();
 		List<Book> books1 = bookDao.findall();
 		for (Book b : books1) {
-			if (b.getTitle().equals(title)) {
+			if (b.getId()==(id)) {
 				books.add(b);
 			}
 		}
